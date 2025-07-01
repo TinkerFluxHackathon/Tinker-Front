@@ -1,17 +1,24 @@
-# fds
+# 🚀 TinkerFlux
 
-This template should help get you started developing with Vue 3 in Vite.
+**TinkerFlux** é um projeto criado para um hackathon que simula a presença digital de uma startup moderna, com design responsivo e foco em inovação acessível.
 
-## Recommended IDE Setup
+---
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## ✨ Funcionalidades
 
-## Customize configuration
+- 🌐 Design responsivo para múltiplos dispositivos  
+- 🎨 Interface moderna e amigável  
+- ♿ Foco em inovação acessível para todos  
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+---
 
-## Project Setup
+## 🛠 Tecnologias Utilizadas
 
+- Tecnologias usadas: Vue, HTML5, CSS3, etc.]
+
+---
+
+## ⚙️ Setup
 ```sh
 npm install
 ```
