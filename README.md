@@ -19,24 +19,15 @@
 ---
 
 ## ⚙️ Setup
-```sh
+
+Siga os passos abaixo para configurar o projeto localmente:
+
+```bash
+# Clone este repositório
+git clone https://github.com/seuusuario/tinkerflux.git
+
+# Entre na pasta do projeto
+cd tinkerflux
+
+# Instale as dependências
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
