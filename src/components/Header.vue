@@ -18,20 +18,26 @@
 header {
   background-color: #4584d3;
   color: white;
-  padding: 3rem;
+  padding: 2rem 2rem 2rem 2rem; /* padding superior e inferior menores */
 }
+.cabecalho {
+  display: flex;
+  align-items: flex-start; /* Alinha tudo ao topo */
+  padding: 0;
+}
+
+.logo-text {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-right: 50rem; /* Ajuste conforme necessário */
+  margin-left: 5rem;
+}
+
 header a {
   color: white;
   text-decoration: none;
-  margin-right: 6rem;
-  font-size: 1.5rem;
-}
-header span.logo-text {
+  margin-right: 3rem; /* Menor espaçamento entre os links */
   font-size: 2rem;
-  font-weight: bold;
-  margin-right: 60rem;
-  margin-left: rem;
+  margin-top: 1rem; /* Opcional: sobe ainda mais os links */
 }
-
-
 </style>
