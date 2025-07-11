@@ -16,7 +16,7 @@
 
 <style scoped>
 header {
-  background-color: #4584d3;
+  background-color: #4584D3;
   color: white;
   padding: 2rem 2rem 2rem 2rem; /* padding superior e inferior menores */
 }
