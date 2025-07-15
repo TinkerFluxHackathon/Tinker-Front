@@ -2,6 +2,7 @@
 import Header from './components/Header.vue';
 import MainContent from './components/MainContent.vue';
 import Highlights from './components/Highlights.vue';
+import Products from './components/Products.vue';
 </script>
 
 <template>
@@ -9,6 +10,7 @@ import Highlights from './components/Highlights.vue';
     <Header />
     <MainContent />
     <Highlights />
+    <Products />
   </div>
 </template>
 

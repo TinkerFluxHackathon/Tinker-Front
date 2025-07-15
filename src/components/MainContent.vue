@@ -13,7 +13,6 @@
 .main-content {
   background: linear-gradient(to bottom, #b7d7ff 0%, #e3f0fc 40%, #f6f8fa 100%);
   padding: 3rem 10rem 15rem 10rem;
-  border: 1px solid #bcd;
   border-radius: 8px;
   margin: auto;
   text-align: left;
