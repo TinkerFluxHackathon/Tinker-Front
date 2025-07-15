@@ -11,19 +11,36 @@
                 <label for="password">Sua Senha</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button @click="enviar">Continuar</button>
+               <router-link to="/">
+
+                  <button >
+
+                    Continuar
+
+                    </button>
+
+            </router-link>
+          
+         
         </form>
     </section>
 </main>
 </template>
 
 <script setup>
-function enviar(event) {
-    event.preventDefault();
 
-}
 </script>
 
 <style scoped>
+section.login-section {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+section.login-section h1 {
+  color: white;
+}
 
 </style>
