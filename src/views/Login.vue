@@ -4,8 +4,8 @@
         <h1>Login</h1>
         <form>
             <div>
-                <label for="email">Seu email</label> 
-                <input type="text" id="email" name="email" required>
+                <label for="email/name">Nome de Usuário/email</label> 
+                <input type="text" id="email" name="email/name" required>
             </div>
             <div>
                 <label for="password">Sua Senha</label>
