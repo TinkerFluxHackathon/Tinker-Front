@@ -13,19 +13,19 @@
 .main-content {
   background: linear-gradient(to bottom, #b7d7ff 0%, #e3f0fc 40%, #f6f8fa 100%);
   padding: 3rem 10rem 15rem 10rem;
-  border-radius: 8px;
   margin: auto;
   text-align: left;
+  border-radius: 15px;
 }
 .main-content h1 {
-  font-size: 8rem;
+  font-size: 6rem;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
   color: #222;
 }
 .main-content p {
-  font-size: 3rem;
-  margin-bottom: 24px;
+  font-size: 2rem;
+  margin-bottom: 1rem;
   color: #444;
 }
 .main-content h1,
@@ -44,7 +44,7 @@
   border-radius: 6px;
   font-size: 2rem;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
   transition: background 0.2s;
   margin-top: 2rem;
 }

@@ -27,9 +27,9 @@ header {
 }
 
 .logo-text {
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: bold;
-  margin-right: 50rem; /* Ajuste conforme necessário */
+  margin-right: 40rem; /* Ajuste conforme necessário */
   margin-left: 5rem;
 }
 
@@ -38,6 +38,6 @@ header a {
   text-decoration: none;
   margin-right: 3rem; /* Menor espaçamento entre os links */
   font-size: 2rem;
-  margin-top: 1rem; /* Opcional: sobe ainda mais os links */
+  margin-top: 0.5rem; /* Opcional: sobe ainda mais os links */
 }
 </style>

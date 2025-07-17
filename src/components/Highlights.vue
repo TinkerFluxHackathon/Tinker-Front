@@ -17,11 +17,12 @@
 
 <style scoped>
 .highlights {
-  background: #f6f8fa; /* cinza claro minimalista */
-  padding: 3rem 4rem 15rem 10rem; /* padding lateral menor */
-  border-radius: 8px;
+  background: #306bb4; /* cinza claro minimalista */
+  padding: 10rem 4rem 15rem 10rem; /* padding lateral menor */
   box-sizing: border-box;
   text-align: left;
+  border: 1px solid #306bb4; /* borda sutil */
+  border-radius: 15px;
 }
 
 .assistente-container {
@@ -36,26 +37,27 @@
 }
 
 .assistente-info h1 {
-  font-size: 4.5rem;         /* igual ao main-content h1 */
-  font-weight: 600;
+  font-size: 3.3rem;         /* igual ao main-content h1 */
+  font-weight: 700;
   margin-bottom: 2rem;
-  color: #222;
+  color: #fff;
 }
 
 .assistente-info p {
-  font-size: 2rem;         /* menor que antes, se quiser */
+  font-size: 1.8rem;         /* menor que antes, se quiser */
   margin-bottom: 2rem;
-  color: #444;
+  color: #f0e8e8;
   max-width: 100%;         /* ocupa toda a largura possível */
   width: 100%;
   text-align: left;
   margin-left: 0;
   margin-right: 0;
+  margin-top: 5rem;
 }
 
 .assistente-btn {
-  background: #306bb4;
-  color: #fff;
+  background: #fff;
+  color: #306bb4;
   border: none;
   padding: 1.5rem 2.5rem;
   border-radius: 6px;
@@ -65,10 +67,11 @@
   font-weight: 500;
   transition: background 0.2s;
   display: block;
+  margin-top: 4rem;
 }
 
 .assistente-btn:hover {
-  background: #1558b0;
+  background: #c6ccd3;
 }
 
 .assistente-img {

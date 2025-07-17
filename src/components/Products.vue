@@ -31,15 +31,15 @@
 <style scoped>
 .products {
   background: #f6f8fa; /* cinza claro minimalista */
-  padding: 3rem 4rem;
-  border-radius: 8px;
+  padding: 9rem 4rem 4rem 1rem; /* padding lateral menor */
   box-sizing: border-box;
   text-align: left;
+  border-radius: 15px;
 }
 .products h1 {
   font-size: 4.5rem;
   font-weight: 600;
-  margin-bottom: 2rem;
+  margin-bottom: 5rem;
   color: #222;
   padding-left: 6rem;
 }
@@ -54,7 +54,7 @@
   font-weight: 500;
   transition: background 0.2s;
   display: block;
-  margin-left: 4rem;
+  margin-left: 2.7rem;
   border-radius: 15px;
   margin-top: 2rem;
 }
@@ -65,6 +65,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 2rem;
+  margin-left: 2rem;
 }
 .product-item {
   flex: 1;
@@ -88,6 +89,6 @@
   font-weight: 600;
   margin-bottom: 6rem;
   color: #222;
-  margin-right: 14rem;
+  margin-right: 10rem;
 }
 </style>
