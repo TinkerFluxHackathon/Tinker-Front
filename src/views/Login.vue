@@ -11,7 +11,9 @@
                 <label for="password">Sua Senha</label>
                 <input type="password" id="password" name="password" required>
             </div>
-               <router-link to="/">
+
+            <nav>
+                <router-link to="/">
 
                   <button >
 
@@ -21,8 +23,11 @@
 
             </router-link>
           
+            </nav>
+               
          
         </form>
+
     </section>
 </main>
 </template>
