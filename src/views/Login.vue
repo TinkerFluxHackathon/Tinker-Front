@@ -4,11 +4,11 @@
         <h1>Login</h1>
         <form>
             <div>
-                <label for="email/name">Nome de Usuário/email</label> 
+                <label for="email/name">Nome de Usuário/email  </label> 
                 <input type="text" id="email" name="email/name" required>
             </div>
             <div>
-                <label for="password">Sua Senha</label>
+                <label for="password">Sua Senha  </label>
                 <input type="password" id="password" name="password" required>
             </div>
 
@@ -44,8 +44,11 @@ section.login-section {
     border: 1px solid #ccc;
     border-radius: 8px;
 }
+
 section.login-section h1 {
-  color: white;
+    text-align: center;
+    font-size: 2vw;
 }
+
 
 </style>
