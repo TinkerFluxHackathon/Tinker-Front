@@ -3,12 +3,19 @@ import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
 
 
+
 const routes = [
-  { path: '/login', 
+
+    { path: '/',
+      name: 'login',
+      component: Login },
+
+  { path: '/login',
+    name: 'login',
     component: Login },
 
      {
-    path: '/',
+    path: '/home',
     name: 'home',
     component: Home
   },

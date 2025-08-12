@@ -6,12 +6,13 @@
 <template>
 
     <router-link to="/login">
-        <button>
-            Login
-        </button>
+
+        <div class="login-button">
+             Login
+        </div>
+        
     </router-link>
 
-    
 <div>
 <router-view/>
 </div>
