@@ -6,16 +6,13 @@ import Home from '../views/Home.vue'
 
 const routes = [
 
-    { path: '/',
-      name: 'login',
-      component: Login },
 
   { path: '/login',
     name: 'login',
     component: Login },
 
      {
-    path: '/home',
+    path: '/',
     name: 'home',
     component: Home
   },

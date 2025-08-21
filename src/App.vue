@@ -5,17 +5,7 @@
 
 <template>
 
-    <router-link to="/login">
-
-        <div class="login-button">
-             Login
-        </div>
-        
-    </router-link>
-
-<div>
 <router-view/>
-</div>
 
 </template>
 

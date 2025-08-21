@@ -6,6 +6,11 @@
     
     <main>
         
+         <router-link to="/login" class="login-link">
+
+             Login
+        
+    </router-link>
     </main>
 
 </template>
