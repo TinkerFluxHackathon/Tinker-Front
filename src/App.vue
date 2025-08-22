@@ -1,4 +1,5 @@
 <script setup>
+
 import Header from './components/Header.vue';
 import MainContent from './components/MainContent.vue';
 import Highlights from './components/Highlights.vue';
@@ -18,3 +19,18 @@ import Footer from './components/Footer.vue';
 
 <style scoped>
 </style>
+
+
+</script>
+
+<template>
+<div>
+  
+</div>
+  
+</template>
+
+<style scoped>
+
+</style>
+
