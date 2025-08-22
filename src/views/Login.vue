@@ -10,13 +10,15 @@
                     <label for="email/name">Seu nome de Usuário / Seu email  </label> <br>
                 <input type="text" id="email" name="email/name" placeholder="emaildecontato@gmail.com" required> <br>
                 </div>
-                
+
               <div class="senha-login">
                 <label for="password">Sua Senha  </label> <br>
                 <input type="password" id="password" name="password" placeholder="42069" required>
               </div>
-                
             </div>
+
+            <input type="radio" id="manter" name="manter">
+              <label for="manter">Manter-me logado</label>
 
             <nav>
                 <router-link to="/" class="home-link">
@@ -48,7 +50,7 @@ form {
 label {
     font-weight: 300;
     color: #FFFFFF;
-    font-size: 20.5px;
+    font-size: 21.5px;
 }
 
 .labels-inputs-login {
@@ -59,7 +61,7 @@ label {
 
 input::placeholder {
 font-weight: 200;
-font-size: 18px ;
+font-size: 23px ;
 color: rgb(239, 239, 239);
 }
 
@@ -68,11 +70,12 @@ input{
     border: 1.5px solid #ccc;
     border-radius: 2.5px;
     background-color: #1C2532;
-    padding: 5.3px;
+    padding: 6.5px;
 }
 
 section.login-section {
     margin: auto;
+    border: 2px solid #FFFFFF;
     border-radius: 4px;
     background-color: #1C2532;
     width: 40vw;
@@ -95,7 +98,8 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90vh;
+    height: 100vh;
+    background-color: #1C2532;;
 }
 
 
