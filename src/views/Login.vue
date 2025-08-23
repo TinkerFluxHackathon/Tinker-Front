@@ -1,3 +1,7 @@
+<script setup>
+
+</script>
+
 <template>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
 
@@ -8,17 +12,17 @@
             <div class="labels-inputs-login">
                 <div class="nome-login">
                     <label for="email/name">Seu nome de Usuário / Seu email  </label> <br>
-                <input type="text" id="email" name="email/name" placeholder="emaildecontato@gmail.com" required> <br>
+                <input type="text" id="email" name="email/name" placeholder="emaildecontato@gmail.com" required class="input-preenchimento"> <br>
                 </div>
 
               <div class="senha-login">
                 <label for="password">Sua Senha  </label> <br>
-                <input type="password" id="password" name="password" placeholder="42069" required>
+                <input type="password" id="password" name="password" placeholder="42069" required class="input-preenchimento">
               </div>
-            </div>
 
-            <input type="radio" id="manter" name="manter">
-              <label for="manter">Manter-me logado</label>
+               <input type="radio" id="manter" name="manter">
+              <label for="manter" class="manter-logado">Manter-me logado</label>
+            </div>
 
             <nav>
                 <router-link to="/" class="home-link">
@@ -33,18 +37,22 @@
 </main>
 </template>
 
-<script setup>
-
-</script>
-
 <style scoped>
+
+.manter-logado {
+    font-weight: 300;
+    color: #FFFFFF;
+    font-size: 18px;
+    padding-left: 7.5px;
+}
 
 .senha-login {
     padding: 28px 0
 }
 
 form {
-  margin: auto;
+  margin:
+   auto;
 }
 
 label {
@@ -65,7 +73,7 @@ font-size: 23px ;
 color: rgb(239, 239, 239);
 }
 
-input{
+input.input-preenchimento {
     width: 35vw;
     border: 1.5px solid #ccc;
     border-radius: 2.5px;
@@ -99,7 +107,7 @@ main {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #1C2532;;
+    background-color: #1C2532;
 }
 
 
