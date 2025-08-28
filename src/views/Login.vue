@@ -9,7 +9,8 @@
     <section class="login-section">
         <form>
           <h1>Login</h1>
-            <div class="labels-inputs-login">
+            <div class="todo-conteudo-login">
+               <div class="labels-inputs-login">
                 <div class="nome-login">
                     <label for="email/name">Seu nome de Usuário / Seu email  </label> <br>
                 <input type="text" id="email" name="email/name" placeholder="emaildecontato@gmail.com" required class="input-preenchimento"> <br>
@@ -30,6 +31,8 @@
             </router-link>
 
             </nav>
+            </div>
+
 
         </form>
 
@@ -38,6 +41,22 @@
 </template>
 
 <style scoped>
+
+.home-link {
+    margin: 0 15.3vw;
+    font-weight: 900;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 20px;
+    color: #FFFFFF;
+    border-radius: 5px;
+    margin-top: 20px;
+    border: 2px solid #FFFFFF;
+}
+
+.todo-conteudo-login {
+    padding: 1.2vw 0;
+}
 
 .manter-logado {
     font-weight: 300;
@@ -98,7 +117,8 @@ section.login-section h1 {
     font-size: 4vw;
     font-weight: 600;
     color: #F5F7FA;
-    padding: 13px 0 ;
+    border-bottom: 1px solid #FFFFFF;
+     margin: 0 10vw 0 10vw;
 }
 
 
