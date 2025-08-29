@@ -42,15 +42,17 @@
 
 <style scoped>
 
+nav {
+    text-align: center;
+}
+
 .home-link {
-    margin: 0 15.3vw;
     font-weight: 900;
     text-decoration: none;
-    padding: 10px 20px;
+    padding: 10px 15vw;
     font-size: 20px;
     color: #FFFFFF;
     border-radius: 5px;
-    margin-top: 20px;
     border: 2px solid #FFFFFF;
 }
 
@@ -67,11 +69,6 @@
 
 .senha-login {
     padding: 28px 0
-}
-
-form {
-  margin:
-   auto;
 }
 
 label {
@@ -101,7 +98,6 @@ input.input-preenchimento {
 }
 
 section.login-section {
-    margin: auto;
     border: 2px solid #FFFFFF;
     border-radius: 4px;
     background-color: #1C2532;
@@ -132,3 +128,4 @@ main {
 
 
 </style>
+    
