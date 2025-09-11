@@ -1,4 +1,17 @@
-<script setup></script>
+<script setup>
+import router from '@/router';
+import { ref } from 'vue';
+const email = ref('');
+const password = ref('');
+function linkToHome() {
+  if (email.value !== '' && password.value !== '') {
+    router.push('/');
+
+  } else {
+    alert('Por favor, preencha todos os campos.');
+  }
+}
+</script>
 
 <template>
   <main>
@@ -10,11 +23,11 @@
             <div class="nome-login">
               <label for="email/name">Seu nome de Usuário / Seu email </label>
               <input
-                type="text"
+              v-model="email"
+                type="email"
                 id="email"
                 name="email/name"
                 placeholder="Digite o seu email / Nome de usuário"
-                required
                 class="input-preenchimento"
               />
             </div>
@@ -22,11 +35,11 @@
             <div class="senha-login">
               <label for="password">Sua Senha </label>
               <input
+              v-model="password"
                 type="password"
                 id="password"
                 name="password"
                 placeholder="Digite a sua senha"
-                required
                 class="input-preenchimento"
               />
             </div>
@@ -34,10 +47,11 @@
             <input type="radio" id="manter" name="manter" />
             <label for="manter" class="manter-logado">Manter-me logado</label>
           </div>
-
           <nav>
-            <router-link to="/" class="home-link"> Continuar </router-link>
-          </nav>
+            <button class="home-link" type="submit" @click="linkToHome">
+              Continuar
+            </button> 
+            </nav>
         </div>
         <router-link to="/sign" class="sign-link"> Clique aqui para cadastrar-se </router-link>
       </form>
@@ -67,6 +81,7 @@ nav {
   color: #ffffff;
   border-radius: 12px;
   border: 2px solid #ffffff;
+  background-color: #1c2532;
 }
 
 .todo-conteudo-login {
@@ -137,4 +152,5 @@ main {
   height: 100vh;
   background-color: #1c2532;
 }
+
 </style>

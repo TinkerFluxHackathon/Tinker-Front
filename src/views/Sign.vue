@@ -3,8 +3,10 @@
 </script>
 <template>
   <main>
-
-  </main>
+      <router-link to="/">
+          Home
+      </router-link>    
+    </main>
 </template>
 <style scoped>
 
