@@ -11,44 +11,42 @@
 
 <style scoped>
 .main-content {
-  background: linear-gradient(to bottom, #b7d7ff 0%, #e3f0fc 40%, #f6f8fa 100%);
+  background: #4584D3;
   padding: 3rem 10rem 15rem 10rem;
   margin: auto;
   text-align: left;
-  border-radius: 15px;
 }
 .main-content h1 {
   font-size: 6rem;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 4rem;
-  color: #222;
+  color: #ffffff;
 }
 .main-content p {
   font-size: 2rem;
   margin-bottom: 1rem;
-  color: #444;
+  color: #ffffff;
 }
 .main-content h1,
 .main-content p {
-  max-width: 80%;
-  width: 80%;
-  text-align: left;
-  margin-left: 0;
-  margin-right: 0;
+  max-width: 60%;
+  width: 60%;
+
 }
 .saiba-mais {
-  background: #4584D3;
-  color: #fff;
+  background: #ffffff;
+  color: #414141;
   border: none;
   padding: 1.5rem 2.5rem;
-  border-radius: 6px;
+  border-radius: 20px;
   font-size: 2rem;
   cursor: pointer;
-  font-weight: 500;
-  transition: background 0.2s;
+  font-weight: 450;
   margin-top: 2rem;
+  transition: all 0.3s ease;
 }
 .saiba-mais:hover {
-  background: #1558b0;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 3);
 }
 </style>

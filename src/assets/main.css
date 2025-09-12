@@ -1,25 +1,26 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import './base.css';
 
 /* Adicione no seu main.css ou no topo do <style> global do App.vue */
+a {
+    text-decoration: none;
+}
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
 html, body, #app {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 body {
-  font-family: "Special Gothic Expanded One", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 button {
-  font-family: "Special Gothic Expanded One", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
-
-
-
-@import './base.css';
 
