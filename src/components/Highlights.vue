@@ -2,7 +2,7 @@
   <section class="highlights">
     <div class="assistente-container">
       <div class="assistente-info">
-        <h1>Nosso Assistente Virtual</h1>
+        <h1>Nosso <span>Assistente Virtual</span></h1>
         <p>
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"Lorem ipsum dolor sit amet, consectetur adipiscing.
         </p>
@@ -36,21 +36,28 @@
 
 .assistente-info h1 {
   font-size: 3.3rem;         /* igual ao main-content h1 */
-  font-weight: 400;
+  font-weight: 700;
   margin-bottom: 2rem;
-  color: #4584D3;
+  color: #343F43;
+}
+
+
+.assistente-info h1 span {
+  font-size: 3.3rem;         /* igual ao main-content h1 */
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #343F43;
+  text-decoration: underline;
 }
 
 .assistente-info p {
   font-size: 1.8rem;         /* menor que antes, se quiser */
   margin-bottom: 2rem;
-  color: #f0e8e8;
-  max-width: 100%;         /* ocupa toda a largura possível */
+  color: #414141;
   width: 100%;
   text-align: left;
-  margin-left: 0;
-  margin-right: 0;
   margin-top: 5rem;
+
 }
 
 .assistente-btn {
@@ -68,7 +75,6 @@
 }
 
 .assistente-btn:hover {
-  background-color: #3867A3;
   transform: scale(1.05);
 }
 

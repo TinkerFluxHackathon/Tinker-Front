@@ -18,12 +18,19 @@
 header {
   background-color: #4584D3;
   color: white;
-  padding: 2rem 2rem 2rem 2rem; /* padding superior e inferior menores */
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 6rem;
+  display: flex;
+  align-items: center;
 }
 .cabecalho {
   display: flex;
   align-items: flex-start; /* Alinha tudo ao topo */
-  padding: 0;
+
 }
 
 .logo-text {

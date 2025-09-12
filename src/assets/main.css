@@ -17,6 +17,7 @@ html, body, #app {
 body {
   font-weight: 400;
   font-style: normal;
+  margin-top: 6rem; /* Espaço para o header fixo */
 }
 button {
   font-weight: 400;
