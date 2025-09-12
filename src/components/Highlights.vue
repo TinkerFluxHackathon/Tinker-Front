@@ -4,7 +4,7 @@
       <div class="assistente-info">
         <h1>Nosso <span>Assistente Virtual</span></h1>
         <p>
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"Lorem ipsum dolor sit amet, consectetur adipiscing.
+          Caso esteja precisando de auxílio, nosso assistente virtual está aqui para ajudar! Ele pode responder suas perguntas, fornecer informações sobre nossos serviços e guiá-lo através do site. Sinta-se à vontade para clicar no botão abaixo e iniciar uma conversa com nosso assistente virtual.
         </p>
         <button class="assistente-btn">Clique aqui</button>
       </div>
@@ -39,11 +39,12 @@
   font-weight: 700;
   margin-bottom: 2rem;
   color: #343F43;
+  
 }
 
 
 .assistente-info h1 span {
-  font-size: 3.3rem;         /* igual ao main-content h1 */
+  font-size: 3.3rem;
   font-weight: 700;
   margin-bottom: 2rem;
   color: #343F43;
@@ -54,9 +55,8 @@
   font-size: 1.8rem;         /* menor que antes, se quiser */
   margin-bottom: 2rem;
   color: #414141;
-  width: 100%;
-  text-align: left;
   margin-top: 5rem;
+  font-weight: 500;
 
 }
 

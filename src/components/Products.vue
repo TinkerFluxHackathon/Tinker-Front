@@ -25,13 +25,19 @@
         <button class="explore-btn">Ver mais</button>
     </div>
   </div>
+  <div class="catalogo-section">
+    <h3>
+    Clique no botão ao lado para acessar o nosso catálogo completo de produtos
+  </h3>
+  <img src="@/assets/arrow.svg" alt="arrow" class="catalogo-link" width="70" height="70"/>
+  </div>
 </section>
 </template>
 
 <style scoped>
 .products {
-  background: #f6f8fa; /* cinza claro minimalista */
-  padding: 9rem 4rem 4rem 1rem; /* padding lateral menor */
+  background: #f6f8fa;
+  padding: 9rem 4rem 4rem 1rem;
   box-sizing: border-box;
   text-align: left;
   border-radius: 15px;
@@ -48,11 +54,11 @@
   color: #fff;
   border: none;
   padding: 1rem 7rem;
-  border-radius: 6px;    
-  font-size: 2rem;    
+  border-radius: 6px;
+  font-size: 2rem;
   cursor: pointer;
   font-weight: 500;
-  transition: background 0.2s;
+  transition: all 0.2s;
   display: block;
   margin-left: 2.7rem;
   border-radius: 15px;
@@ -90,5 +96,28 @@
   margin-bottom: 6rem;
   color: #222;
   margin-right: 10rem;
+}
+
+.catalogo-section {
+  margin-top: 6rem;
+  display: flex;
+  justify-content: center;
+}
+
+.catalogo-section h3 {
+  margin-top: 4px;
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: #223136;
+}
+
+.catalogo-link {
+  cursor: pointer;
+  margin-left: 2rem;
+  transition: all 0.3s ease;
+}
+
+.catalogo-link:hover {
+  transform: scale(1.1);
 }
 </style>
