@@ -2,15 +2,14 @@
 
 </script>
 
+
 <template>
 
+
     <main>
-
-         <router-link to="/login" class="login-link">
-
-             Login
-
-    </router-link>
+        <router-link to="/login">
+            Login
+        </router-link>
     </main>
 
 </template>
