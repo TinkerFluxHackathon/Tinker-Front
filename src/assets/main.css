@@ -1,5 +1,17 @@
 
 @import './base.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+a {
+    text-decoration: none;
+}
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+@import './base.css';
 
 /* Adicione no seu main.css ou no topo do <style> global do App.vue */
 html, body, #app {
