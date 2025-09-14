@@ -8,9 +8,6 @@
         </p>
         <button class="assistente-btn">Clique aqui</button>
       </div>
-      <div class="assistente-img">
-        <img src="@/assets/daorinha2.0.png" alt="Assistente Virtual" />
-      </div>
     </div>
   </section>
 </template>
@@ -76,13 +73,6 @@
 
 .assistente-btn:hover {
   transform: scale(1.05);
-}
-
-.assistente-img {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .assistente-img img {
