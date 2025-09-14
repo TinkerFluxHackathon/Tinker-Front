@@ -1,13 +1,19 @@
-<script setup >
+<script setup>
 
 </script>
+
+
 <template>
-  <main>
-    <p>
-      file
-    </p>
-  </main>
+
+
+    <main>
+        <router-link to="/login">
+            Login
+        </router-link>
+    </main>
+
 </template>
+
 <style scoped>
 
 </style>
