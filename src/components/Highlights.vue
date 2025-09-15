@@ -36,7 +36,7 @@
   font-weight: 700;
   margin-bottom: 2rem;
   color: #343F43;
-  
+
 }
 
 
