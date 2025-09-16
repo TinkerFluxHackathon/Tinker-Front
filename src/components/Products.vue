@@ -8,19 +8,19 @@
   <div class="product-list">
     <div class="product-item">
         <h2>Produto 1</h2>
-      <img src="/public/furadeira.png" alt="Produto 1" />
+      <img src="/public/image-4.png" alt="Produto 1" />
         <p>Descrição breve do produto 1.</p>
         <button class="explore-btn">Ver mais</button>
     </div>
     <div class="product-item">
         <h2>Produto 2</h2>
-      <img src="/public/furadeira.png" alt="Produto 2" />
+      <img src="/public/image-4.png" alt="Produto 2" />
         <p>Descrição breve do produto 2.</p>
         <button class="explore-btn">Ver mais</button>
     </div>
     <div class="product-item">
         <h2>Produto 3</h2>
-      <img src="/public/furadeira.png" alt="Produto 3" />
+      <img src="/public/image-4.png" alt="Produto 3" />
         <p>Descrição breve do produto 3.</p>
         <button class="explore-btn">Ver mais</button>
     </div>
