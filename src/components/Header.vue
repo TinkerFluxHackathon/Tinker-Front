@@ -8,7 +8,7 @@
     <router-link to="/">Home </router-link>
     <router-link to="/products">Produtos </router-link>
     <router-link to="/about">Sobre </router-link>
-      <router-link to="/login">Login </router-link>
+      <router-link to="/login">Login</router-link>
     </nav>
   </header>
 
@@ -46,5 +46,6 @@ header a {
   margin-right: 3rem;
   font-size: 2rem;
   margin-top: 0.5rem;
+  font-weight: 500;
 }
 </style>
