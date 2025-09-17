@@ -6,8 +6,10 @@
     <nav class="cabecalho">
     <span class="logo-text">tinkerflux</span>
     <router-link to="/">Home </router-link>
-    <router-link to="/products">Produtos </router-link>
+    <router-link to="/products">Catálogo </router-link>
     <router-link to="/about">Sobre </router-link>
+    <router-link to="/ia">IA</router-link>
+    <router-link to="/contact">Contate-nos</router-link>
       <router-link to="/login">Login</router-link>
     </nav>
   </header>
@@ -44,7 +46,7 @@ header a {
   color: white;
   text-decoration: none;
   margin-right: 3rem;
-  font-size: 2rem;
+  font-size: 1.7rem;
   margin-top: 0.5rem;
   font-weight: 500;
 }
