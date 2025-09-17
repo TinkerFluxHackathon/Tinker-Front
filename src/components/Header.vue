@@ -5,10 +5,10 @@
   <header class="header">
     <nav class="cabecalho">
     <span class="logo-text">tinkerflux</span>
-      <a href="#home">Home</a>
-      <a href="#sobre">Sobre</a>
-      <a href="#produtos">Produtos</a>
-      <a href="#contato">Contato</a>
+    <router-link to="/">Home </router-link>
+    <router-link to="/products">Produtos </router-link>
+    <router-link to="/about">Sobre </router-link>
+      <router-link to="/login">Login </router-link>
     </nav>
   </header>
 
@@ -29,22 +29,22 @@ header {
 }
 .cabecalho {
   display: flex;
-  align-items: flex-start; /* Alinha tudo ao topo */
+  align-items: flex-start;
 
 }
 
 .logo-text {
   font-size: 3rem;
   font-weight: bold;
-  margin-right: 40rem; /* Ajuste conforme necessário */
+  margin-right: 40rem;
   margin-left: 5rem;
 }
 
 header a {
   color: white;
   text-decoration: none;
-  margin-right: 3rem; /* Menor espaçamento entre os links */
+  margin-right: 3rem;
   font-size: 2rem;
-  margin-top: 0.5rem; /* Opcional: sobe ainda mais os links */
+  margin-top: 0.5rem;
 }
 </style>
