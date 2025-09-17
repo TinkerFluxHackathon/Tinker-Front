@@ -6,7 +6,7 @@
     <main>
         <h1>Sobre nós</h1>
         <div>
-            <p class="ideia">Esse site foi criado com a ideia de ajudar pessoas a consertar de maneira autônoma seus objetos que não estão funcionando de maneira adequada.</p>
+            <p class="ideia">Esse site foi criado com a ideia de ajudar pessoas a consertar de maneira autônoma seus objetos que não estão funcionando de maneira adequada, sem precisar de conhecimento especializado.</p>
             <img src="/public/caixa-de-ferramentas.png" class="ideia" alt="caixa-de-ferramentas.png">
         </div>
         <div class="assistente">
@@ -14,7 +14,7 @@
             <p class="assistente">Nosso site possui um diferencial, o nosso assistente virtual, ele se chama Daorinha, ele com poucas conversas, ele te ajuda a reconhecer e também te oferece guias para que você possa resolver os problemas que estão ocorrendo.</p>
         </div>
         <div class="catalogo">
-            <p class="catalogo">Possuímos também um vasto catálogo que auxilia você a conseguir tudo o que precisa para o concerto com base no guia que o assistente te oferece.</p>
+            <p class="catalogo">Possuímos também um vasto catálogo que auxilia você a conseguir tudo o que precisa para o conserto com base no guia que o assistente te oferece.</p>
             <div class="overflow">
                 <img src="/public/Products.png" class="catalogo" alt="products.png">
             </div>
