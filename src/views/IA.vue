@@ -86,7 +86,10 @@ function parseGuideHtml(html) {
     return { title, steps, needs };
   }
 
-
+  async function fetchIFixitGuide(url) {
+    const html = await fetchHtml(url);
+    return parseGuideHtml(html);
+  }
 
 
 
