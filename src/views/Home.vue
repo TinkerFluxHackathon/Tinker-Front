@@ -1,5 +1,5 @@
 <script setup>
-    
+    import Header from '@/components/Header.vue'
 </script>
 
 
@@ -7,9 +7,7 @@
 
 
     <main>
-        <router-link to="/login">
-            Login
-        </router-link>
+        <Header />
     </main>
 
 </template>
