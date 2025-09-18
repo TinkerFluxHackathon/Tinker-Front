@@ -2,6 +2,7 @@
   import { ref } from 'vue';
   import { VMarkdownView} from 'vue3-markdown'
   import 'vue3-markdown/dist/vue3-markdown.css'
+  import { watch } from 'vue';
 
   const API_KEY = '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'
   const MODEL_ID = 'deepseek/deepseek-r1:free'
@@ -25,6 +26,26 @@
     // temperature: 0.0;
   })
 });
+
+function initIFixitScraper(messagesRef) {
+  function palavrasCrapeMessage(text = '') {
+    const t = String(text).toLowerCase();
+    if (!t) {
+      return false
+    };
+    if (t.includes('pt.ifixit.com') || t.includes('ifixit')) {
+      return true;
+    }
+    if (t.includes('guia') || t.includes('tutorial') || t.includes('passo a passo') || t.includes('passo-a-passo') || t.includes('passo-passo') || t.includes('receita') || t.includes('corrig') || t.includes('refaz') || t.includes('restaur') || t.includes('refaz') || t.includes('consert') || t.includes('arrum') || t.includes('como arrum') || t.includes('ajeit') || t.includes('como ajeit') || t.includes('dar um jeito') || t.includes('repar') || t.includes('como repar') || t.includes('emend') || t.includes('troc') || t.includes('como troc') || t.includes('como consert')) {
+      return true;
+    return false;
+    }
+  }
+} 
+
+
+
+
 </script>
 
 <template>
