@@ -1,7 +1,9 @@
 <script setup>
+  import Header from '@/components/Header.vue';
+  import Footer from '@/components/Footer.vue';
   import { watch } from 'vue'
-    import { ref } from 'vue'
-    import { VMarkdownView } from 'vue3-markdown'
+  import { ref } from 'vue'
+  import { VMarkdownView } from 'vue3-markdown'
 import 'vue3-markdown/dist/vue3-markdown.css'
     const API_KEY = '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'
     const MODEL_ID = 'deepseek/deepseek-r1:free'  // Modelo DeepSeek R1 (free)
@@ -19,7 +21,7 @@ import 'vue3-markdown/dist/vue3-markdown.css'
   body: JSON.stringify({
     model: 'deepseek/deepseek-r1:free',
     messages: [
-      { role: 'user', content: 'Você é um assistente objetivo e factual. Formate APENAS o guia recebido no estilo iFixit seguindo estritamente: Saída em português. Exatamente: título, seção "O que você precisa:" e passos numerados. Sem texto adicional. Se incerto, responda: "Preciso de mais informações ou de uma avaliação física". Produza apenas o conteúdo final; não se autoanuncie nem explique decisões.' }
+      { role: 'user', content: 'Você é um assistente objetivo e factual. Formate APENAS o guia recebido no estilo iFixit seguindo estritamente: Saída em português. Exatamente: título, seção "O que você precisa:" e passos numerados. Sem texto adicional. Se incerto, responda: "Preciso de mais informações ou de uma avaliação física". Produza apenas o conteúdo final; NÃO revele pensamentos internos, raciocínios, autodiálogo, planos mentais ou etapas de tomada de decisão.' }
     ],
     stream: true,
     temperature: 0.0
@@ -257,6 +259,7 @@ async function sendMessageStream() {
 </script>
 
 <template>
+  <Header />
   <div class="chat-container">
   <h1>Olá, como posso te ajudar?</h1>
     <div class="messages">
@@ -287,15 +290,16 @@ async function sendMessageStream() {
       </button>
     </p>
   </div>
+  <Footer />
 </template>
 
 
 <style>
 
 .chat-container {
-  max-width: 1000px; 
+  max-width: 78.125vw; 
   margin: auto; 
-  border: 1px solid #ccc; 
+  border: 1px solid #cccccc00; 
   padding: 5vw;
 }
 
