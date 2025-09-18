@@ -69,6 +69,24 @@ async function fetchHtml(url) {
   }
 }
 
+function parseGuideHtml(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html || '', 'text/html');
+
+    const h1 = doc.querySelector('h1');
+    const title = h1 ? h1.innerText.trim() : '';
+
+    const stepsEls = doc.querySelectorAll('ol.steps-container.container li');
+    const steps = Array.from(stepsEls).map(li => li.innerText.trim()).filter(Boolean);
+
+    const needEl = doc.querySelector('.css-e5oax3');
+    const altNeedEl = !needEl ? doc.querySelector('[class*="need"], [class*="tools"], .tools-list') : null;
+    const needs = (needEl || altNeedEl) ? (needEl || altNeedEl).innerText.trim() : '';
+
+    return { title, steps, needs };
+  }
+
+
 
 
 
