@@ -7,7 +7,7 @@
     <span class="logo-text">tinkerflux</span>
       <a href="#home">Home</a>
       <a href="#sobre">Sobre</a>
-      <a href="#produtos">Produtos</a>
+     <router-link to="/products">Catálogo</router-link>
       <a href="#contato">Contato</a>
     </nav>
   </header>

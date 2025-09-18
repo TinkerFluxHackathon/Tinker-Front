@@ -2,18 +2,18 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
-const produtos = ref([])      
+const produtos = ref([])
 const loading = ref(true)
 const errorMsg = ref(null)
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000', 
-  withCredentials: true,           
+  baseURL: 'http://127.0.0.1:8000',
+  withCredentials: true,
 })
 
 onMounted(async () => {
   try {
-    const response = await api.get('/api/produtos/') 
+    const response = await api.get('/api/produtos/')
     console.log('AXIOS RESPONSE:', response)
 
     if (Array.isArray(response.data)) {
@@ -111,7 +111,7 @@ onMounted(async () => {
     border: 1px solid black;
   }
 
-  div ul li button {;
+  div ul li button {
     background-color: #434343
   }
 
