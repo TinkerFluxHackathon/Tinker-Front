@@ -262,7 +262,38 @@ async function sendMessageStream() {
 </script>
 
 <template>
-  <main>
+  <div class="chat-container">
+  <h1>Olá, como posso te ajudar?</h1>
+    <div class="messages">
+      <div 
+        v-for="(msg, idx) in messages" 
+        :key="idx" 
+        :class="msg.role === 'user' ? 'msg-user' : 'msg-assistant'"
+      >
+        <strong>{{ msg.role === 'user' ? 'Você' : 'Assistente' }}:</strong>
+          <VMarkdownView
+            mode="light"
+            :content="msg.content">  
+          </VMarkdownView>
 
-  </main>
+
+        <!-- {{ msg.content }} -->
+      </div>
+    </div>
+    <p class="input-area">
+
+      <input 
+        v-model="userInput" 
+        @keyup.enter="sendMessageStream" 
+        placeholder="Digite algo que deseja concertar..."
+      />
+      <button @click="sendMessageStream">
+        <img src="/public/enviar-mensagem 1.png"></img>
+      </button>
+    </p>
+  </div>
 </template>
+
+<style scoped>
+  
+</style>
