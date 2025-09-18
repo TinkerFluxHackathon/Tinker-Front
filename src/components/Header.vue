@@ -3,15 +3,15 @@
 
 <template>
   <header class="header">
-    <nav class="cabecalho">
-    <span class="logo-text">tinkerflux</span>
-    <router-link to="/">Home </router-link>
+    <nav>
+       <router-link to="/home"> <span class="logo-text">tinkerflux</span></router-link>
+    <router-link to="/home">Home </router-link>
     <router-link to="/products">Catálogo </router-link>
     <router-link to="/about">Sobre </router-link>
     <router-link to="/ia">IA</router-link>
     <router-link to="/contact">Contate-nos</router-link>
-      <router-link to="/login">Login</router-link>
     </nav>
+    <router-link to="/cart"><img src="/public/cart-image.svg" alt="cart-image" class="cart-link"></router-link>
   </header>
 
 </template>
@@ -29,11 +29,7 @@ header {
   display: flex;
   align-items: center;
 }
-.cabecalho {
-  display: flex;
-  align-items: flex-start;
 
-}
 
 .logo-text {
   font-size: 3rem;
@@ -49,5 +45,11 @@ header a {
   font-size: 1.7rem;
   margin-top: 0.5rem;
   font-weight: 500;
+}
+
+.cart-link {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 1.3rem 0 0 0;
 }
 </style>
