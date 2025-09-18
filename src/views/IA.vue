@@ -155,9 +155,110 @@ function parseGuideHtml(html) {
   };
 }
 
+const ifixit = initIFixitScraper(messages);
 
+// Stream do assistente
 
+async function sendMessageStream() {
+  const text = userInput.value.trim()
+  if (!text) return
 
+  messages.value.push({ role: 'user', content: text })
+  userInput.value = ''
+
+  const assistantIndex = messages.value.push({ role: 'assistant', content: '' }) - 1
+
+  const payload = {
+    model: MODEL_ID,
+    messages: messages.value,
+    stream: true,
+    temperature: 0.0,
+    top_p: 0.8
+  }
+
+  try {
+    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+
+    if (!res.ok) {
+      messages.value[assistantIndex].content = `Erro: ${res.status} ${res.statusText}`
+      return
+    }
+
+    if (!res.body) {
+      const data = await res.json()
+      const botMessage = data.choices?.[0]?.message?.content ?? data.choices?.[0]?.text ?? '[sem conteúdo]'
+      messages.value[assistantIndex].content = botMessage
+      return
+    }
+
+    const reader = res.body.getReader()
+    const decoder = new TextDecoder('utf-8')
+    let buffer = ''
+    let streamDone = false
+
+    while (!streamDone) {
+      const read = await reader.read()
+      if (read.done) break
+
+      buffer += decoder.decode(read.value, { stream: true })
+
+      let nlIndex
+      while ((nlIndex = buffer.indexOf('\n')) !== -1) {
+        const line = buffer.slice(0, nlIndex).trim()
+        buffer = buffer.slice(nlIndex + 1)
+
+        if (!line) continue
+        if (!line.startsWith('data:')) continue
+
+        const payloadStr = line.replace(/^data:\s*/, '')
+
+        if (payloadStr === '[DONE]') {
+          streamDone = true
+          break
+        }
+
+        try {
+          const parsed = JSON.parse(payloadStr)
+          const delta = parsed?.choices?.[0]?.delta?.content
+          const msgContent = parsed?.choices?.[0]?.message?.content
+          const textChunk = parsed?.choices?.[0]?.text
+          const chunk = delta ?? msgContent ?? textChunk
+          if (chunk) messages.value[assistantIndex].content += chunk
+        } catch (e) {
+          continue
+        }
+      }
+    }
+
+    if (buffer.trim()) {
+      const lines = buffer.split('\n').map(l => l.trim()).filter(Boolean)
+      for (const line of lines) {
+        if (!line.startsWith('data:')) continue
+        const payloadStr = line.replace(/^data:\s*/, '')
+        if (payloadStr === '[DONE]') break
+        try {
+          const parsed = JSON.parse(payloadStr)
+          const delta = parsed?.choices?.[0]?.delta?.content
+          const msgContent = parsed?.choices?.[0]?.message?.content
+          const textChunk = parsed?.choices?.[0]?.text
+          const chunk = delta ?? msgContent ?? textChunk
+          if (chunk) messages.value[assistantIndex].content += chunk
+        } catch (e) {}
+      }
+    }
+
+  } catch (err) {
+    console.error('Erro no stream:', err)
+    messages.value[assistantIndex].content = 'Erro de rede ou parsing do stream.'
+  }
+}
 
 
 </script>
