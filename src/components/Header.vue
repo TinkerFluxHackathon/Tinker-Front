@@ -4,13 +4,12 @@
 <template>
   <header class="header">
     <nav class="cabecalho">
-    <span class="logo-text">tinkerflux</span>
-    <router-link to="/">Home </router-link>
+       <router-link to="/home"> <span class="logo-text">tinkerflux</span></router-link>
+    <router-link to="/home">Home </router-link>
     <router-link to="/products">Catálogo </router-link>
     <router-link to="/about">Sobre </router-link>
     <router-link to="/ia">IA</router-link>
     <router-link to="/contact">Contate-nos</router-link>
-      <router-link to="/login">Login</router-link>
     </nav>
   </header>
 
