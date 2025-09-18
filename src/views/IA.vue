@@ -91,6 +91,69 @@ function parseGuideHtml(html) {
     return parseGuideHtml(html);
   }
 
+  let initialized = false;
+  const stop = watch(messagesRef, async (newVal) => {
+    try {
+      const last = Array.isArray(newVal) ? newVal[newVal.length - 1] : null;
+      if (!last || String(last.role || '').toLowerCase() !== 'user') return;
+      const text = String(last.content || '');
+      if (!shouldScrapeMessage(text)) return;
+      let urls = extractIfixitUrls(text);
+      let guideUrl = urls && urls.length ? urls[0] : '';
+
+      if (!guideUrl) {
+        const searchUrl = 'https://pt.ifixit.com/search?query=' + encodeURIComponent(text);
+        let searchHtml;
+        try {
+          searchHtml = await fetchHtml(searchUrl);
+        } catch (errSearch) {
+          console.warn('Busca iFixit falhou:', errSearch);
+          return;
+        }
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(searchHtml || '', 'text/html');
+        const a = Array.from(doc.querySelectorAll('a')).find(a => a && a.getAttribute && a.getAttribute('href') && a.getAttribute('href').includes('/Guide/'));
+        if (a) {
+          const href = a.getAttribute('href');
+          guideUrl = href.startsWith('http') ? href : ('https://pt.ifixit.com' + href);
+        }
+      }
+
+      if (!guideUrl) return;
+
+      const assistantIndex = messagesRef.value.push({ role: 'assistant', content: 'Pesquisando guia no iFixit...' }) - 1;
+
+      try {
+        const data = await fetchIFixitGuide(guideUrl);
+        let reply = '';
+        if (data.title) reply += `**Guia:** ${data.title}\n\n`;
+        if (data.needs) reply += `**O que você precisa:**\n${data.needs}\n\n`;
+        if (data.steps && data.steps.length) {
+          reply += '**Passos:**\n';
+          data.steps.forEach((s, i) => {
+            const short = s.length > 1000 ? s.slice(0, 1000) + '…' : s;
+            reply += `${i + 1}. ${short}\n`;
+          });
+        } else {
+          reply += 'Nenhum passo encontrado no guia.';
+        }
+        messagesRef.value[assistantIndex].content = reply;
+      } catch (err) {
+        messagesRef.value[assistantIndex].content = 'Erro ao obter o guia do iFixit: ' + (err && err.message ? err.message : String(err));
+      }
+    } catch (err) {
+      console.error('Erro no watcher iFixit:', err);
+    }
+  });
+
+  initialized = true;
+
+  return {
+    stop: () => {
+      if (stop) stop();
+    }
+  };
+}
 
 
 
