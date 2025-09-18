@@ -43,6 +43,36 @@ function initIFixitScraper(messagesRef) {
   }
 } 
 
+function extractIfixitUrls(text = '') {
+  const re = /https?:\/\/pt\.ifixit\.com\/Guide[^\s'")<>]*/gi;
+  const matches = Array.from(String(text).matchAll(re)).map(m => m[0]);
+  return matches;
+}
+
+async function fetchHtml(url) {
+  try {
+    const res = await fetch(url, { method: 'GET'});
+    if (!res.ok) {
+      throw new Error('HTTP ' + res.status);
+      return await res.text();
+  } catch (err) {
+    try {
+      const proxy = 'https://api.alloworigins.win/raw?url=' + encodeURIComponent(url);
+      const res2 = await fetch(proxy, {method: 'GET' });
+      if (!res2.ok) {
+        throw new Error('Proxy HTTP ' + res2.status);
+        return await res2.text();
+    } catch(err2) {
+      console.error('fetchHtml erro:', err, err2);
+      throw err2;
+    }
+  }
+}
+
+
+
+
+
 
 
 
