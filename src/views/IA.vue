@@ -1,16 +1,16 @@
 <script setup>
-  import { ref } from 'vue';
-  import { VMarkdownView} from 'vue3-markdown'
-  import 'vue3-markdown/dist/vue3-markdown.css'
-  import { watch } from 'vue';
+import { ref } from 'vue';
+import { VMarkdownView } from 'vue3-markdown'
+import 'vue3-markdown/dist/vue3-markdown.css'
+import { watch } from 'vue';
 
-  const API_KEY = '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'
-  const MODEL_ID = 'deepseek/deepseek-r1:free'
+const API_KEY = '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'
+const MODEL_ID = 'deepseek/deepseek-r1:free'
 
-  const messages = ref([])
-  const userInput = ref('')
+const messages = ref([])
+const userInput = ref('')
 
-  fetch("https://openrouter.ai/api/v1/chat/completions", {
+fetch("https://openrouter.ai/api/v1/chat/completions", {
   method: "POST",
   headers: {
     'Authorization': 'Bearer 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',
@@ -20,7 +20,8 @@
     model: 'deepseek/deepseek-r1:free',
     messages: [
       {
-        role: 'user', content: 'Você é um assistente objetivo e factual. Formate APENAS o guia recebido no estilo iFixit seguindo estritamente: Saída em português. Respectivamente: título, seção "O que você precisa:" e passos numerados. Sem texto adicional. Se incerto, responda: "Preciso de mais informações ou de uma avaliaçã física". Produza apenas o conteúdo final; não se autoanucie nem explique decisões.'}
+        role: 'user', content: 'Você é um assistente objetivo e factual. Formate APENAS o guia recebido no estilo iFixit seguindo estritamente: Saída em português. Respectivamente: título, seção "O que você precisa:" e passos numerados. Sem texto adicional. Se incerto, responda: "Preciso de mais informações ou de uma avaliaçã física". Produza apenas o conteúdo final; não se autoanucie nem explique decisões.'
+      }
     ],
     stream: true,
     // temperature: 0.0;
@@ -38,10 +39,10 @@ function initIFixitScraper(messagesRef) {
     }
     if (t.includes('guia') || t.includes('tutorial') || t.includes('passo a passo') || t.includes('passo-a-passo') || t.includes('passo-passo') || t.includes('receita') || t.includes('corrig') || t.includes('refaz') || t.includes('restaur') || t.includes('refaz') || t.includes('consert') || t.includes('arrum') || t.includes('como arrum') || t.includes('ajeit') || t.includes('como ajeit') || t.includes('dar um jeito') || t.includes('repar') || t.includes('como repar') || t.includes('emend') || t.includes('troc') || t.includes('como troc') || t.includes('como consert')) {
       return true;
-    return false;
+      return false;
     }
   }
-} 
+}
 
 function extractIfixitUrls(text = '') {
   const re = /https?:\/\/pt\.ifixit\.com\/Guide[^\s'")<>]*/gi;
@@ -51,18 +52,16 @@ function extractIfixitUrls(text = '') {
 
 async function fetchHtml(url) {
   try {
-    const res = await fetch(url, { method: 'GET'});
-    if (!res.ok) {
-      throw new Error('HTTP ' + res.status);
-      return await res.text();
+    const res = await fetch(url, { method: 'GET' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return await res.text();
   } catch (err) {
     try {
-      const proxy = 'https://api.alloworigins.win/raw?url=' + encodeURIComponent(url);
-      const res2 = await fetch(proxy, {method: 'GET' });
-      if (!res2.ok) {
-        throw new Error('Proxy HTTP ' + res2.status);
-        return await res2.text();
-    } catch(err2) {
+      const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
+      const res2 = await fetch(proxy, { method: 'GET' });
+      if (!res2.ok) throw new Error('Proxy HTTP ' + res2.status);
+      return await res2.text();
+    } catch (err2) {
       console.error('fetchHtml erro:', err, err2);
       throw err2;
     }
@@ -70,90 +69,89 @@ async function fetchHtml(url) {
 }
 
 function parseGuideHtml(html) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html || '', 'text/html');
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html || '', 'text/html');
 
-    const h1 = doc.querySelector('h1');
-    const title = h1 ? h1.innerText.trim() : '';
+  const h1 = doc.querySelector('h1');
+  const title = h1 ? h1.innerText.trim() : '';
 
-    const stepsEls = doc.querySelectorAll('ol.steps-container.container li');
-    const steps = Array.from(stepsEls).map(li => li.innerText.trim()).filter(Boolean);
+  const stepsEls = doc.querySelectorAll('ol.steps-container.container li');
+  const steps = Array.from(stepsEls).map(li => li.innerText.trim()).filter(Boolean);
 
-    const needEl = doc.querySelector('.css-e5oax3');
-    const altNeedEl = !needEl ? doc.querySelector('[class*="need"], [class*="tools"], .tools-list') : null;
-    const needs = (needEl || altNeedEl) ? (needEl || altNeedEl).innerText.trim() : '';
+  const needEl = doc.querySelector('.css-e5oax3');
+  const altNeedEl = !needEl ? doc.querySelector('[class*="need"], [class*="tools"], .tools-list') : null;
+  const needs = (needEl || altNeedEl) ? (needEl || altNeedEl).innerText.trim() : '';
 
-    return { title, steps, needs };
-  }
-
-  async function fetchIFixitGuide(url) {
-    const html = await fetchHtml(url);
-    return parseGuideHtml(html);
-  }
-
-  let initialized = false;
-  const stop = watch(messagesRef, async (newVal) => {
-    try {
-      const last = Array.isArray(newVal) ? newVal[newVal.length - 1] : null;
-      if (!last || String(last.role || '').toLowerCase() !== 'user') return;
-      const text = String(last.content || '');
-      if (!shouldScrapeMessage(text)) return;
-      let urls = extractIfixitUrls(text);
-      let guideUrl = urls && urls.length ? urls[0] : '';
-
-      if (!guideUrl) {
-        const searchUrl = 'https://pt.ifixit.com/search?query=' + encodeURIComponent(text);
-        let searchHtml;
-        try {
-          searchHtml = await fetchHtml(searchUrl);
-        } catch (errSearch) {
-          console.warn('Busca iFixit falhou:', errSearch);
-          return;
-        }
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(searchHtml || '', 'text/html');
-        const a = Array.from(doc.querySelectorAll('a')).find(a => a && a.getAttribute && a.getAttribute('href') && a.getAttribute('href').includes('/Guide/'));
-        if (a) {
-          const href = a.getAttribute('href');
-          guideUrl = href.startsWith('http') ? href : ('https://pt.ifixit.com' + href);
-        }
-      }
-
-      if (!guideUrl) return;
-
-      const assistantIndex = messagesRef.value.push({ role: 'assistant', content: 'Pesquisando guia no iFixit...' }) - 1;
-
-      try {
-        const data = await fetchIFixitGuide(guideUrl);
-        let reply = '';
-        if (data.title) reply += `**Guia:** ${data.title}\n\n`;
-        if (data.needs) reply += `**O que você precisa:**\n${data.needs}\n\n`;
-        if (data.steps && data.steps.length) {
-          reply += '**Passos:**\n';
-          data.steps.forEach((s, i) => {
-            const short = s.length > 1000 ? s.slice(0, 1000) + '…' : s;
-            reply += `${i + 1}. ${short}\n`;
-          });
-        } else {
-          reply += 'Nenhum passo encontrado no guia.';
-        }
-        messagesRef.value[assistantIndex].content = reply;
-      } catch (err) {
-        messagesRef.value[assistantIndex].content = 'Erro ao obter o guia do iFixit: ' + (err && err.message ? err.message : String(err));
-      }
-    } catch (err) {
-      console.error('Erro no watcher iFixit:', err);
-    }
-  });
-
-  initialized = true;
-
-  return {
-    stop: () => {
-      if (stop) stop();
-    }
-  };
+  return { title, steps, needs };
 }
+
+async function fetchIFixitGuide(url) {
+  const html = await fetchHtml(url);
+  return parseGuideHtml(html);
+}
+
+let initialized = false;
+const stop = watch(messagesRef, async (newVal) => {
+  try {
+    const last = Array.isArray(newVal) ? newVal[newVal.length - 1] : null;
+    if (!last || String(last.role || '').toLowerCase() !== 'user') return;
+    const text = String(last.content || '');
+    if (!shouldScrapeMessage(text)) return;
+    let urls = extractIfixitUrls(text);
+    let guideUrl = urls && urls.length ? urls[0] : '';
+
+    if (!guideUrl) {
+      const searchUrl = 'https://pt.ifixit.com/search?query=' + encodeURIComponent(text);
+      let searchHtml;
+      try {
+        searchHtml = await fetchHtml(searchUrl);
+      } catch (errSearch) {
+        console.warn('Busca iFixit falhou:', errSearch);
+        return;
+      }
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(searchHtml || '', 'text/html');
+      const a = Array.from(doc.querySelectorAll('a')).find(a => a && a.getAttribute && a.getAttribute('href') && a.getAttribute('href').includes('/Guide/'));
+      if (a) {
+        const href = a.getAttribute('href');
+        guideUrl = href.startsWith('http') ? href : ('https://pt.ifixit.com' + href);
+      }
+    }
+
+    if (!guideUrl) return;
+
+    const assistantIndex = messagesRef.value.push({ role: 'assistant', content: 'Pesquisando guia no iFixit...' }) - 1;
+
+    try {
+      const data = await fetchIFixitGuide(guideUrl);
+      let reply = '';
+      if (data.title) reply += `**Guia:** ${data.title}\n\n`;
+      if (data.needs) reply += `**O que você precisa:**\n${data.needs}\n\n`;
+      if (data.steps && data.steps.length) {
+        reply += '**Passos:**\n';
+        data.steps.forEach((s, i) => {
+          const short = s.length > 1000 ? s.slice(0, 1000) + '…' : s;
+          reply += `${i + 1}. ${short}\n`;
+        });
+      } else {
+        reply += 'Nenhum passo encontrado no guia.';
+      }
+      messagesRef.value[assistantIndex].content = reply;
+    } catch (err) {
+      messagesRef.value[assistantIndex].content = 'Erro ao obter o guia do iFixit: ' + (err && err.message ? err.message : String(err));
+    }
+  } catch (err) {
+    console.error('Erro no watcher iFixit:', err);
+  }
+});
+
+initialized = true;
+
+return {
+  stop: () => {
+    if (stop) stop();
+  }
+};
 
 const ifixit = initIFixitScraper(messages);
 
@@ -250,7 +248,7 @@ async function sendMessageStream() {
           const textChunk = parsed?.choices?.[0]?.text
           const chunk = delta ?? msgContent ?? textChunk
           if (chunk) messages.value[assistantIndex].content += chunk
-        } catch (e) {}
+        } catch (e) { }
       }
     }
 
