@@ -7,6 +7,8 @@ import Sign from '../views/Sign.vue'
 import Products from '../views/Products.vue'
 import Contact from '../views/Contact.vue'
 import IA from '../views/IA.vue'
+import About from '../views/About.vue'
+import Cart from '../views/Cart.vue'
 
 const routes = [
   {
@@ -38,6 +40,16 @@ const routes = [
     path: '/ia',
     name: 'ia',
     component: IA
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: About
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: Cart
   },
 ]
 
