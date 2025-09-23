@@ -14,7 +14,7 @@
 
 ## 🛠 Tecnologias Utilizadas
 
-- Tecnologias usadas: Vue, HTML, CSS e JavaScript
+- Tecnologias usadas: Vue, HTML, CSS, JavaScript, Django, Axios
 
 ---
 
