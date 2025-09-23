@@ -5,7 +5,7 @@ const email = ref('');
 const password = ref('');
 function linkToHome() {
   if (email.value !== '' && password.value !== '') {
-    router.push('/');
+    router.push('/home');
 
   } else {
     alert('Por favor, preencha todos os campos.');
