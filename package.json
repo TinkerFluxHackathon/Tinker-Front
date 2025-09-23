@@ -14,9 +14,12 @@
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
+    "axios": "^1.12.2",
     "router": "^2.2.0",
     "vue": "^3.5.17",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "vue3-markdown": "^1.2.15",
+    "vue3-markdown-it": "^1.0.10"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
