@@ -1,6 +1,6 @@
 # 🚀 TinkerFlux
 
-**TinkerFlux** é um projeto criado para um hackathon, projeto escolar, que, com design responsivo e foco em inovação acessível, te auxiliará a consertar tudo o que você precisa. O projeto conta com um assistente virtual que te auxiliará nestes consertos, te oferecendo guias para cada tipo de reparo que o objeto que deseja consertar esteja precisando.  
+**TinkerFlux** é um projeto criado para um hackathon, projeto escolar, que, com design responsivo e foco em inovação acessível, te auxiliará a consertar tudo o que você precisa. O projeto conta com um assistente virtual que te auxiliará nestes consertos, te oferecendo guias para cada tipo de reparo que o objeto que deseja consertar esteja precisando. E caso necessário, possuímos um catálogo com uma grande variedade de produtos e ferramentas, que poderiam ser utilizados para a resolução dos guias que seriam recebidos através do assistente.
 
 ---
 
