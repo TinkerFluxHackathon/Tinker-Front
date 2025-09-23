@@ -1,6 +1,6 @@
 # 🚀 TinkerFlux
 
-**TinkerFlux** é um projeto criado para um hackathon que simula a presença digital de uma startup moderna, com design responsivo e foco em inovação acessível.
+**TinkerFlux** é um projeto criado para um hackathon, projeto escolar, que, com design responsivo e foco em inovação acessível, te auxiliará a consertar tudo o que você precisa. O projeto conta com um assistente virtual que te auxiliará nestes consertos, te oferecendo guias para cada tipo de reparo que o objeto que deseja consertar esteja precisando.  
 
 ---
 
@@ -8,7 +8,9 @@
 
 - 🌐 Design responsivo para múltiplos dispositivos  
 - 🎨 Interface moderna e amigável  
-- ♿ Foco em inovação acessível para todos  
+- ♿ Foco em inovação acessível para todos
+- 🤖 Assistente Virtual
+- 🛒 Catálogo de Produtos
 
 ---
 
