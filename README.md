@@ -24,7 +24,7 @@ Siga os passos abaixo para configurar o projeto localmente:
 
 ```bash
 # Clone este repositório
-git clone https://github.com/seuusuario/tinkerflux.git
+git clone https://github.com/TinkerFluxHackathon/Tinker-Front.git
 
 # Entre na pasta do projeto
 cd tinkerflux
