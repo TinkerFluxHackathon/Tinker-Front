@@ -22,26 +22,25 @@ export default class UsuarioAPI {
             throw error;
         }
     }
-}
-//     async updateUsuario(usuario) {
-//         try {
-//             const url = `${API_BASE_URL}${usuario.id}/`;
-//             const response = await axios.put(url, usuario);
-//             return response.data;
-//         } catch (error) {
-//             console.error("Erro ao atualizar usuário:", error);
-//             throw error;
-//         }
-//     }
+    async updateUsuario(usuario) {
+        try {
+            const url = `${API_BASE_URL}${usuario.id}/`;
+            const response = await axios.put(url, usuario);
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao atualizar usuário:", error);
+            throw error;
+        }
+    }
 
-//     async deleteUsuario(id) {
-//         try {
-//             const url = `${API_BASE_URL}${id}/`;
-//             const response = await axios.delete(url);
-//             return response;
-//         } catch (error) {
-//             console.error("Erro ao excluir usuário:", error);
-//             throw error;
-//         }
-//     }
-// }
+    async deleteUsuario(id) {
+        try {
+            const url = `${API_BASE_URL}${id}/`;
+            const response = await axios.delete(url);
+            return response;
+        } catch (error) {
+            console.error("Erro ao excluir usuário:", error);
+            throw error;
+        }
+    }
+}
