@@ -3,13 +3,15 @@
 
 <template>
   <header class="header">
-    <nav class="cabecalho">
-    <span class="logo-text">tinkerflux</span>
-      <a href="#home">Home</a>
-      <a href="#sobre">Sobre</a>
-      <a href="#produtos">Produtos</a>
-      <a href="#contato">Contato</a>
+    <nav>
+       <router-link to="/home"> <span class="logo-text">tinkerflux</span></router-link>
+    <router-link to="/home">Home </router-link>
+    <router-link to="/products">Catálogo </router-link>
+    <router-link to="/about">Sobre </router-link>
+    <router-link to="/ia">IA</router-link>
+    <router-link to="/contact">Contate-nos</router-link>
     </nav>
+    <router-link to="/cart"><img src="/public/cart-image.svg" alt="cart-image" class="cart-link"></router-link>
   </header>
 
 </template>
@@ -27,24 +29,27 @@ header {
   display: flex;
   align-items: center;
 }
-.cabecalho {
-  display: flex;
-  align-items: flex-start; /* Alinha tudo ao topo */
 
-}
 
 .logo-text {
   font-size: 3rem;
   font-weight: bold;
-  margin-right: 40rem; /* Ajuste conforme necessário */
+  margin-right: 40rem;
   margin-left: 5rem;
 }
 
 header a {
   color: white;
   text-decoration: none;
-  margin-right: 3rem; /* Menor espaçamento entre os links */
-  font-size: 2rem;
-  margin-top: 0.5rem; /* Opcional: sobe ainda mais os links */
+  margin-right: 3rem;
+  font-size: 1.7rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.cart-link {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 1.3rem 0 0 0;
 }
 </style>
