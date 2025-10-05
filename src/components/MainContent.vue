@@ -4,8 +4,8 @@
 <template>
   <section class="main-content">
     <h1>Soluções Inovadoras para Você</h1>
-    <p>Descrição breve e cativante sobre o que a empresa oferece.</p>
-    <button class="saiba-mais">Saiba mais</button>
+    <p>Na TinkerFlux você aprende a consertar e melhorar seus eletrônicos com ajuda de nossa IA e encontra as peças certas para restaurar seus aparelhos.</p>
+    <router-link to="/about" class="saiba-mais">Saiba mais </router-link>
   </section>
 </template>
 
@@ -23,8 +23,8 @@
   color: #ffffff;
 }
 .main-content p {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 2.1rem;
+  margin-bottom: 4.5rem;
   color: #ffffff;
 }
 .main-content h1,
@@ -37,7 +37,7 @@
   background: #ffffff;
   color: #414141;
   border: none;
-  padding: 1.5rem 2.5rem;
+  padding: 1.2rem 2.1rem;
   border-radius: 20px;
   font-size: 2rem;
   cursor: pointer;
