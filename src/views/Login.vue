@@ -1,16 +1,203 @@
+<!-- 
 <script setup>
-import router from '@/router';
-import { ref } from 'vue';
-const email = ref('');
-const password = ref('');
-function linkToHome() {
-  if (email.value !== '' && password.value !== '') {
-    router.push('/home');
-
-  } else {
-    alert('Por favor, preencha todos os campos.');
+  
+    
+    import router from '@/router';
+    function linkToHome() {
+        router.push('/home');
+    }
+  import { reactive, onMounted, computed } from 'vue'
+  import { useUsuarioStore } from '@/stores/usuario'
+  
+  const usuarioStore = useUsuarioStore();
+  
+  const defaultUsuario = { id: 0, nome: '' };
+  const usuario = reactive({ ...defaultUsuario });
+  
+  const isEditing = computed(() => usuario.id !== 0);
+  
+  onMounted(async () => {
+      await usuarioStore.getUsuarios();
+  })
+  
+  function resetForm() {
+      Object.assign(usuario, { ...defaultUsuario });
   }
-}
+  
+  async function submitUsuario() {
+      if (isEditing.value) {
+          await usuarioStore.updateUsuario({ ...usuario });
+      } else {
+          await usuarioStore.addUsuario({ ...usuario });
+      }
+      resetForm();
+  }
+  
+  function editSelectedUsuario(usu) {
+      Object.assign(usuario, { ...usu });
+  }
+  
+  async function deleteSelectedUsuario(id) {
+      if (confirm('Tem certeza que deseja excluir este usuario?')) {
+          await usuarioStore.deleteUsuario(id);
+      }
+  }
+  
+  </script>
+  
+  <template>
+      <div>
+          <h1>Gerenciamento de Usuario</h1>
+  
+          <!-- Formulário para Adicionar/Editar Usuario
+          <form @submit.prevent="submitUsuario">
+              <h2>{{ isEditing ? 'Editar Usuario' : 'Adicionar Novo Usuario' }}</h2>
+              <div>
+                  <label for="nome">Nome:</label>
+                  <input type="text" id="nome" v-model="usuario.nome" required />
+              </div>
+              <button type="submit">{{ isEditing ? 'Salvar Edição' : 'Adicionar Usuario' }}</button>
+              <button type="button" @click="resetForm">Cancelar</button>
+          </form>
+  
+          <hr />
+  
+          <h2>Lista de Estados</h2>
+          <table class="estado-table">
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Nome</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr v-for="usu in estadoStore.estados" :key="usu.id">
+                      <td>{{ usu.id }}</td>
+                      <td>{{ usu.nome }}</td>
+                      <td>
+                          <button @click="editSelectedUsuario(usu)">Editar</button>
+                          <button @click="deleteSelectedUsuario(usu.id)">Excluir</button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+    <nav>
+        <button class="home-link" type="submit" @click="linkToHome">
+        Continuar
+      </button>
+    </nav>
+  </template>
+  
+  <style scoped>
+  div {
+      margin: 20px;
+      font-family: sans-serif;
+  }
+  form {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+  }
+  form div {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+  }
+  label {
+      display: inline-block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      width: 80px;
+  }
+  input[type="text"] {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      flex-grow: 1;
+  }
+  button {
+      padding: 8px 15px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+  }
+  button:hover {
+      background-color: #0056b3;
+  }
+  button[type="button"] {
+      background-color: #6c757d;
+  }
+  button[type="button"]:hover {
+      background-color: #545b62;
+  }
+  
+  .estado-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  .estado-table th, .estado-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  .estado-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  .estado-table button {
+    margin-right: 5px;
+    padding: 6px 10px;
+    font-size: 0.85em;
+  }
+  </style>
+   -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<script setup>
+  
+  
+  import router from '@/router';
+  import { ref } from 'vue';
+  const email = ref('');
+  const password = ref('');
+  function linkToHome() {
+    if (email.value !== '' && password.value !== '') {
+      router.push('/home');
+
+    } else {
+      alert('Por favor, preencha todos os campos.');
+    }
+  }
+
 </script>
 
 <template>
@@ -22,26 +209,14 @@ function linkToHome() {
           <div class="labels-inputs-login">
             <div class="nome-login">
               <label for="email/name">Seu nome de Usuário / Seu email </label>
-              <input
-              v-model="email"
-                type="email"
-                id="email"
-                name="email/name"
-                placeholder="Digite o seu email / Nome de usuário"
-                class="input-preenchimento"
-              />
+              <input v-model="email" type="email" id="email" name="email/name"
+                placeholder="Digite o seu email / Nome de usuário" class="input-preenchimento" />
             </div>
 
             <div class="senha-login">
               <label for="password">Sua Senha </label>
-              <input
-              v-model="password"
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Digite a sua senha"
-                class="input-preenchimento"
-              />
+              <input v-model="password" type="password" id="password" name="password" placeholder="Digite a sua senha"
+                class="input-preenchimento" />
             </div>
 
             <input type="radio" id="manter" name="manter" />
@@ -51,7 +226,7 @@ function linkToHome() {
             <button class="home-link" type="submit" @click="linkToHome">
               Continuar
             </button>
-            </nav>
+          </nav>
         </div>
         <router-link to="/sign" class="sign-link"> Clique aqui para cadastrar-se </router-link>
       </form>
@@ -60,7 +235,6 @@ function linkToHome() {
 </template>
 
 <style scoped>
-
 .sign-link {
   font-weight: 500;
   color: #3867A3;
@@ -151,6 +325,6 @@ main {
   align-items: center;
   height: 100vh;
   background-color: #ffffff;
-}
-
+}  
 </style>
+
