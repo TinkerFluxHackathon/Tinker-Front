@@ -264,8 +264,8 @@ async function sendMessageStream() {
     <h1>Olá, como posso te ajudar?</h1>
     <div class="messages">
       <div v-for="(msg, idx) in messages" :key="idx" :class="msg.role === 'user' ? 'msg-user' : 'msg-assistant'">
-        <strong>{{ msg.role === 'user' ? 'Você' : 'Assistente' }}:</strong>
-        <VMarkdownView mode="light" :content="msg.content">
+        <strong>{{ msg.role === 'user' ? '' : '' }}</strong>
+        <VMarkdownView mode="transparent" :content="msg.content">
         </VMarkdownView>
 
 
@@ -299,11 +299,14 @@ async function sendMessageStream() {
 }
 
 .messages {
-  max-height: 700px;
+  font-size: 0.9vw;
+  max-height: 36.458vw;
   overflow-y: auto;
   margin: 0 0 1vw 0;
   flex-direction: column;
   display: flex;
+  box-shadow: 0px 0px 2vw 5px rgba(69, 133, 211, 0.103);
+  border-radius: 20px;
 }
 
 .msg-user {
@@ -311,8 +314,8 @@ async function sendMessageStream() {
   display: inline-block;
   color: #343F43;
   text-align: right;
-  margin: 5px 3.8vw 0 20vw;
-  background-color: #3866a31f;
+  margin: 2vw 3.8vw 0 20vw;
+  background-color: #4585d310;
   padding: 1vw 1vw 1vw 1vw;
   border-radius: 10px;
   width: fit-content;
@@ -324,8 +327,8 @@ async function sendMessageStream() {
   display: inline-block;
   text-align: left;
   color: black;
-  margin: 1vw 0 0.5vw 3.8vw;
-  padding: 1vw;
+  margin: 1vw 20vw 2vw 3.8vw;
+  padding: 1vw 1vw 1vw 1vw;
   width: fit-content;
   max-width: 83.5%;
   border-radius: 10px;
@@ -362,5 +365,6 @@ button {
 button img {
   max-width: 1.4vw;
   margin: 0 0.7vw 0 0;
+  transform: rotate(-90deg);
 }
 </style>
