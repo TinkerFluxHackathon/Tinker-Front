@@ -1,21 +1,21 @@
 <script setup>
-  import Header from '@/components/Header.vue';
-  import Footer from '@/components/Footer.vue';
-  import { watch } from 'vue'
-  import { ref } from 'vue'
-  import { VMarkdownView } from 'vue3-markdown'
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
+import { ref, watch } from 'vue'
+import { VMarkdownView } from 'vue3-markdown'
 import 'vue3-markdown/dist/vue3-markdown.css'
-    const API_KEY = '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'
-    const MODEL_ID = 'deepseek/deepseek-r1:free'  // Modelo DeepSeek R1 (free)
-    
-    const messages = ref([])
-    const userInput = ref('')
 
 
-    fetch("https://openrouter.ai/api/v1/chat/completions", {
+const MODEL_ID = 'deepseek/deepseek-r1:free'  // Modelo DeepSeek R1 (free)
+const API_KEY = import.meta.env.VITE_API_KEY;
+const messages = ref([])
+const userInput = ref('')
+
+
+fetch("https://openrouter.ai/api/v1/chat/completions", {
   method: "POST",
   headers: {
-    'Authorization': 'Bearer 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',
+    'Authorization': `Bearer ${API_KEY}`,
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
@@ -243,7 +243,7 @@ async function sendMessageStream() {
           const textChunk = parsed?.choices?.[0]?.text
           const chunk = delta ?? msgContent ?? textChunk
           if (chunk) messages.value[assistantIndex].content += chunk
-        } catch (e) {}
+        } catch (e) { }
       }
     }
 
@@ -261,18 +261,12 @@ async function sendMessageStream() {
 <template>
   <Header />
   <div class="chat-container">
-  <h1>Olá, como posso te ajudar?</h1>
+    <h1>Olá, como posso te ajudar?</h1>
     <div class="messages">
-      <div 
-        v-for="(msg, idx) in messages" 
-        :key="idx" 
-        :class="msg.role === 'user' ? 'msg-user' : 'msg-assistant'"
-      >
+      <div v-for="(msg, idx) in messages" :key="idx" :class="msg.role === 'user' ? 'msg-user' : 'msg-assistant'">
         <strong>{{ msg.role === 'user' ? 'Você' : 'Assistente' }}:</strong>
-          <VMarkdownView
-            mode="light"
-            :content="msg.content">  
-          </VMarkdownView>
+        <VMarkdownView mode="light" :content="msg.content">
+        </VMarkdownView>
 
 
         <!-- {{ msg.content }} -->
@@ -280,11 +274,7 @@ async function sendMessageStream() {
     </div>
     <p class="input-area">
 
-      <input 
-        v-model="userInput" 
-        @keyup.enter="sendMessageStream" 
-        placeholder="Digite algo que deseja concertar..."
-      />
+      <input v-model="userInput" @keyup.enter="sendMessageStream" placeholder="Digite algo que deseja concertar..." />
       <button @click="sendMessageStream">
         <img src="/public/enviar-mensagem 1.png"></img>
       </button>
@@ -295,11 +285,10 @@ async function sendMessageStream() {
 
 
 <style>
-
 .chat-container {
-  max-width: 78.125vw; 
-  margin: auto; 
-  border: 1px solid #cccccc00; 
+  max-width: 78.125vw;
+  margin: auto;
+  border: 1px solid #cccccc00;
   padding: 5vw;
 }
 
@@ -310,16 +299,17 @@ async function sendMessageStream() {
 }
 
 .messages {
-  max-height: 700px; 
-  overflow-y: auto; 
+  max-height: 700px;
+  overflow-y: auto;
   margin: 0 0 1vw 0;
   flex-direction: column;
   display: flex;
 }
+
 .msg-user {
   align-self: flex-end;
   display: inline-block;
-  color: #343F43; 
+  color: #343F43;
   text-align: right;
   margin: 5px 3.8vw 0 20vw;
   background-color: #3866a31f;
@@ -328,11 +318,12 @@ async function sendMessageStream() {
   width: fit-content;
   max-width: 50%;
 }
+
 .msg-assistant {
   align-self: flex-start;
   display: inline-block;
   text-align: left;
-  color: black; 
+  color: black;
   margin: 1vw 0 0.5vw 3.8vw;
   padding: 1vw;
   width: fit-content;
@@ -340,6 +331,7 @@ async function sendMessageStream() {
   border-radius: 10px;
   border: 1px solid #3866a328;
 }
+
 .input-area {
   display: flex;
   border-radius: 30px;
@@ -347,8 +339,9 @@ async function sendMessageStream() {
   border: 1px solid #3867A3;
 }
 
-input[type="text"], input {
-  flex: 1; 
+input[type="text"],
+input {
+  flex: 1;
   padding: 8px;
   border: none;
   background: none;
@@ -357,6 +350,7 @@ input[type="text"], input {
   color: #343F43;
   margin: 0 0 0 1vw;
 }
+
 button {
   padding: 8px 12px;
   background: white;
@@ -369,5 +363,4 @@ button img {
   max-width: 1.4vw;
   margin: 0 0.7vw 0 0;
 }
-
 </style>
