@@ -1,14 +1,14 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8000/api/produtos/";
+const API_BASE_URL = "https://tinker-backend-on5j.onrender.com/api/";
 
-export default class Produto {
-    async getProdutoAll() {
+export default class ProdutoAPI {
+    async getProdutosAll() {
         try {
             const response = await axios.get(API_BASE_URL);
             return response.data;
         } catch (error) {
-            console.error("Erro ao buscar produto:", error);
+            console.error("Erro ao buscar produtos:", error);
             throw error;
         }
     }
