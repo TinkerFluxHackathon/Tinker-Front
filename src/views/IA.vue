@@ -6,7 +6,7 @@ import { VMarkdownView } from 'vue3-markdown'
 import 'vue3-markdown/dist/vue3-markdown.css'
 
 
-const MODEL_ID = 'deepseek/deepseek-r1:free'  // Modelo DeepSeek R1 (free)
+const MODEL_ID = 'deepseek/deepseek-chat-v3.1:free'  // Modelo DeepSeek R1 (free)
 const API_KEY = import.meta.env.VITE_API_KEY;
 const messages = ref([])
 const userInput = ref('')
@@ -19,7 +19,7 @@ fetch("https://openrouter.ai/api/v1/chat/completions", {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    model: 'deepseek/deepseek-r1:free',
+    model: 'deepseek/deepseek-chat-v3.1:free',
     messages: [
       { role: 'user', content: 'Você é um assistente objetivo e factual. Formate APENAS o guia recebido no estilo iFixit seguindo estritamente: Saída em português. Exatamente: título, seção "O que você precisa:" e passos numerados. Sem texto adicional. Se incerto, responda: "Preciso de mais informações ou de uma avaliação física". Produza apenas o conteúdo final; NÃO revele pensamentos internos, raciocínios, autodiálogo, planos mentais ou etapas de tomada de decisão.' }
     ],
@@ -267,13 +267,11 @@ async function sendMessageStream() {
         <h1 v-if="!messages.length >= 1">Olá, como posso te ajudar?</h1>
       </Transition>
       <Transition name="mensagem-transicao">
-        <div v-if="messages.length >= 1" class="messages">
+        <div v-show="messages.length >= 1" class="messages">
           <div v-for="(msg, idx) in messages" :key="idx" :class="msg.role === 'user' ? 'msg-user' : 'msg-assistant'">
             <strong>{{ msg.role === 'user' ? '' : '' }}</strong>
             <VMarkdownView mode="transparent" :content="msg.content">
             </VMarkdownView>
-    
-    
             <!-- {{ msg.content }} -->
           </div>
         </div>
@@ -295,7 +293,7 @@ async function sendMessageStream() {
 
 main{
   flex: 1;
-  min-height: 100dvh;
+  min-height: 83.5dvh;
 }
 
 .titulo-transicao-enter-active,
@@ -310,7 +308,7 @@ main{
 
 .mensagem-transicao-enter-active,
 .mensagem-transicao-leave-active {
-  transition: all 0.8s ease-in 0.8s; 
+  transition: opacity 0.8s ease-in 0.8s;
 }
 
 .mensagem-transicao-enter-from,
@@ -335,14 +333,15 @@ main{
 }
 
 .messages {
-  font-size: 0.9vw;
-  max-height: 36.458vw;
-  overflow-y: auto;
+  font-size: 0.8vw;
   margin: 0 0 1vw 0;
   flex-direction: column;
   display: flex;
   box-shadow: 0px 0px 2vw 5px rgba(69, 133, 211, 0.102);
   border-radius: 20px;
+  max-height: 26.8vw;
+  min-height: 26.8vw;
+  overflow: auto;
 }
 
 .msg-user {
@@ -372,10 +371,15 @@ main{
 }
 
 .input-area {
-  display: flex;
-  border-radius: 30px;
+  border-radius: 1.875rem;
   font-size: 1vw;
-  border: 1px solid #4585d38b;
+  border: 0.0625rem solid #4585d38b;
+  display: flex;
+  top: 85%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  position: absolute;
 }
 
 input[type="text"],
