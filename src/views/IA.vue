@@ -256,35 +256,71 @@ async function sendMessageStream() {
 
 
 
+
 </script>
 
 <template>
   <Header />
-  <div class="chat-container">
-    <h1>Olá, como posso te ajudar?</h1>
-    <div class="messages">
-      <div v-for="(msg, idx) in messages" :key="idx" :class="msg.role === 'user' ? 'msg-user' : 'msg-assistant'">
-        <strong>{{ msg.role === 'user' ? '' : '' }}</strong>
-        <VMarkdownView mode="transparent" :content="msg.content">
-        </VMarkdownView>
-
-
-        <!-- {{ msg.content }} -->
-      </div>
+  <main>
+    <div class="chat-container">
+      <Transition name="titulo-transicao">
+        <h1 v-if="!messages.length >= 1">Olá, como posso te ajudar?</h1>
+      </Transition>
+      <Transition name="mensagem-transicao">
+        <div v-if="messages.length >= 1" class="messages">
+          <div v-for="(msg, idx) in messages" :key="idx" :class="msg.role === 'user' ? 'msg-user' : 'msg-assistant'">
+            <strong>{{ msg.role === 'user' ? '' : '' }}</strong>
+            <VMarkdownView mode="transparent" :content="msg.content">
+            </VMarkdownView>
+    
+    
+            <!-- {{ msg.content }} -->
+          </div>
+        </div>
+      </Transition>
+      <p class="input-area">
+  
+        <input v-model="userInput" @keyup.enter="sendMessageStream" placeholder="Digite algo que deseja concertar..." />
+        <button @click="sendMessageStream">
+          <img src="/public/enviar-mensagem 1.png"></img>
+        </button>
+      </p>
     </div>
-    <p class="input-area">
-
-      <input v-model="userInput" @keyup.enter="sendMessageStream" placeholder="Digite algo que deseja concertar..." />
-      <button @click="sendMessageStream">
-        <img src="/public/enviar-mensagem 1.png"></img>
-      </button>
-    </p>
-  </div>
+  </main>
   <Footer />
 </template>
 
 
 <style>
+
+main{
+  flex: 1;
+  min-height: 100dvh;
+}
+
+.titulo-transicao-enter-active,
+.titulo-transicao-leave-active {
+  transition: all 0.8s ease-out;
+}
+
+.titulo-transicao-enter-from,
+.titulo-transicao-leave-to {
+  opacity: 0;
+}
+
+.mensagem-transicao-enter-active,
+.mensagem-transicao-leave-active {
+  transition: all 0.8s ease-in 0.8s; 
+}
+
+.mensagem-transicao-enter-from,
+.mensagem-transicao-leave-to {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.95);
+  filter: blur(1px);
+}
+
+
 .chat-container {
   max-width: 78.125vw;
   margin: auto;
@@ -295,7 +331,7 @@ async function sendMessageStream() {
 .chat-container h1 {
   text-align: center;
   font-size: 2vw;
-  margin: 0 0 15vw 0;
+  margin: 0 0 10vw 0;
 }
 
 .messages {
@@ -305,7 +341,7 @@ async function sendMessageStream() {
   margin: 0 0 1vw 0;
   flex-direction: column;
   display: flex;
-  box-shadow: 0px 0px 2vw 5px rgba(69, 133, 211, 0.103);
+  box-shadow: 0px 0px 2vw 5px rgba(69, 133, 211, 0.102);
   border-radius: 20px;
 }
 
@@ -339,7 +375,7 @@ async function sendMessageStream() {
   display: flex;
   border-radius: 30px;
   font-size: 1vw;
-  border: 1px solid #3867A3;
+  border: 1px solid #4585d38b;
 }
 
 input[type="text"],
@@ -360,6 +396,7 @@ button {
   border: none;
   background: none;
   font-size: 0.2vw;
+  
 }
 
 button img {
