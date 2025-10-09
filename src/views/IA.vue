@@ -6,7 +6,7 @@ import { VMarkdownView } from 'vue3-markdown'
 import 'vue3-markdown/dist/vue3-markdown.css'
 
 
-const MODEL_ID = 'deepseek/deepseek-chat-v3.1:free'  // Modelo DeepSeek R1 (free)
+const MODEL_ID = 'deepseek/deepseek-r1:free'  // Modelo DeepSeek R1 (free)
 const API_KEY = import.meta.env.VITE_API_KEY;
 const messages = ref([])
 const userInput = ref('')
@@ -19,7 +19,7 @@ fetch("https://openrouter.ai/api/v1/chat/completions", {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    model: 'deepseek/deepseek-chat-v3.1:free',
+    model: 'deepseek/deepseek-r1:free',
     messages: [
       { role: 'user', content: 'Você é um assistente objetivo e factual. Formate APENAS o guia recebido no estilo iFixit seguindo estritamente: Saída em português. Exatamente: título, seção "O que você precisa:" e passos numerados. Sem texto adicional. Se incerto, responda: "Preciso de mais informações ou de uma avaliação física". Produza apenas o conteúdo final; NÃO revele pensamentos internos, raciocínios, autodiálogo, planos mentais ou etapas de tomada de decisão.' }
     ],
