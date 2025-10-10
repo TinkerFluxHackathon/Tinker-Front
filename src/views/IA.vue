@@ -1,45 +1,141 @@
 <script setup>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
-import { ref, watch } from 'vue'
-import { VMarkdownView } from 'vue3-markdown'
-import 'vue3-markdown/dist/vue3-markdown.css'
+import { ref, watch, onUnmounted } from 'vue';
+import { VMarkdownView } from 'vue3-markdown';
+import 'vue3-markdown/dist/vue3-markdown.css';
 
-
-const MODEL_ID = 'deepseek/deepseek-r1:free'  // Modelo DeepSeek R1 (free)
+// Modelo Gemini 2.5 Flash
+const MODEL_ID = 'gemini-2.5-flash';
 const API_KEY = import.meta.env.VITE_API_KEY;
-const messages = ref([])
-const userInput = ref('')
 
+const messages = ref([]);
+const userInput = ref('');
 
-fetch("https://openrouter.ai/api/v1/chat/completions", {
-  method: "POST",
-  headers: {
-    'Authorization': `Bearer ${API_KEY}`,
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    model: 'deepseek/deepseek-r1:free',
-    messages: [
-      { role: 'user', content: 'Você é um assistente objetivo e factual. Formate APENAS o guia recebido no estilo iFixit seguindo estritamente: Saída em português. Exatamente: título, seção "O que você precisa:" e passos numerados. Sem texto adicional. Se incerto, responda: "Preciso de mais informações ou de uma avaliação física". Produza apenas o conteúdo final; NÃO revele pensamentos internos, raciocínios, autodiálogo, planos mentais ou etapas de tomada de decisão.' }
-    ],
-    stream: true,
-    temperature: 0.0
-  })
-});
+const DEFAULT_CONTEXT_CHAR_LIMIT = 6000;
+const RETRY_CONTEXT_CHAR_LIMIT = 2000;
+const SUMMARY_LIMIT = 1200;
 
+const fullGuides = new Map();
+
+function safeTruncate(str, charLimit = 2000) {
+  if (!str) return '';
+  if (str.length <= charLimit) return str;
+  const sliced = str.slice(0, charLimit);
+  const lastLineBreak = sliced.lastIndexOf('\n');
+  if (lastLineBreak > Math.floor(charLimit * 0.6)) {
+    return sliced.slice(0, lastLineBreak) + '\n\n…(conteúdo truncado)';
+  }
+  return sliced + '\n\n…(conteúdo truncado)';
+}
+
+function buildContext(messagesPayload = [], charLimit = DEFAULT_CONTEXT_CHAR_LIMIT) {
+  const parts = [];
+  let total = 0;
+  for (let i = messagesPayload.length - 1; i >= 0; i--) {
+    const m = messagesPayload[i];
+    const roleLabel = (m.role || 'unknown').toUpperCase();
+    const safeContent = safeTruncate(String(m.content || ''), 2000);
+    const piece = `${roleLabel}: ${safeContent}`;
+    if (total + piece.length > charLimit) break;
+    parts.unshift(piece);
+    total += piece.length;
+  }
+  return parts.join('\n\n');
+}
+
+async function sendGeminiRequest(payload) {
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_ID}:generateContent`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': API_KEY
+      },
+      body: JSON.stringify(payload)
+    }
+  );
+
+  const txt = await res.text();
+  let data;
+  try {
+    data = txt ? JSON.parse(txt) : {};
+  } catch (e) {
+    throw new Error(`Resposta não-JSON da Gemini: ${txt}`);
+  }
+
+  if (!res.ok) {
+    const msg = data?.error?.message || JSON.stringify(data);
+    throw new Error(`Erro Gemini (${res.status}): ${msg}`);
+  }
+
+  const candidateText =
+    data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+    data?.outputs?.[0]?.content?.parts?.[0]?.text ||
+    data?.text ||
+    data?.response?.text ||
+    '';
+
+  const finishReason =
+    data?.candidates?.[0]?.finishReason ||
+    data?.usageMetadata?.finishReason ||
+    null;
+
+  return { text: candidateText, finishReason, raw: data };
+}
+
+async function callGeminiDirect(messagesPayload) {
+  const contextText = buildContext(messagesPayload, DEFAULT_CONTEXT_CHAR_LIMIT);
+
+  const payload = {
+    contents: [{ parts: [{ text: contextText }] }],
+    generationConfig: {
+      temperature: 0.0,
+      topP: 0.8,
+      topK: 40
+    }
+  };
+
+  const { text, raw } = await sendGeminiRequest(payload);
+  if (text) return text;
+  return JSON.stringify(raw);
+}
 
 function initIFixitScraper(messagesRef) {
   function shouldScrapeMessage(text = '') {
     const t = String(text).toLowerCase();
     if (!t) return false;
     if (t.includes('pt.ifixit.com') || t.includes('ifixit')) return true;
-    if (t.includes('guia') || t.includes('tutorial') || t.includes('passo a passo') || t.includes('passo-a-passo') || t.includes('passo-passo') || t.includes('receita') || t.includes('corrig') || t.includes('refaz') || t.includes('restaur') || t.includes('refaz') || t.includes('consert') || t.includes('arrum') || t.includes('como arrum') || t.includes('ajeit') || t.includes('como ajeit') || t.includes('dar um jeito') || t.includes('repar') || t.includes('como repar') || t.includes('emend') || t.includes('troc') || t.includes('como troc') || t.includes('como consert')) return true;
+    if (
+      t.includes('guia') ||
+      t.includes('tutorial') ||
+      t.includes('passo a passo') ||
+      t.includes('passo-a-passo') ||
+      t.includes('passo-passo') ||
+      t.includes('receita') ||
+      t.includes('corrig') ||
+      t.includes('refaz') ||
+      t.includes('restaur') ||
+      t.includes('consert') ||
+      t.includes('arrum') ||
+      t.includes('como arrum') ||
+      t.includes('ajeit') ||
+      t.includes('como ajeit') ||
+      t.includes('dar um jeito') ||
+      t.includes('repar') ||
+      t.includes('como repar') ||
+      t.includes('emend') ||
+      t.includes('troc') ||
+      t.includes('como troc') ||
+      t.includes('como consert')
+    )
+      return true;
     return false;
   }
 
   function extractIfixitUrls(text = '') {
-    const re = /https?:\/\/pt\.ifixit\.com\/Guide[^\s'")<>]*/gi;
+    const re = /https?:\/\/pt\.ifixit\.com\/Guide[^\s'"\)<>]*/gi;
     const matches = Array.from(String(text).matchAll(re)).map(m => m[0]);
     return matches;
   }
@@ -84,8 +180,6 @@ function initIFixitScraper(messagesRef) {
     return parseGuideHtml(html);
   }
 
-
-  let initialized = false;
   const stop = watch(messagesRef, async (newVal) => {
     try {
       const last = Array.isArray(newVal) ? newVal[newVal.length - 1] : null;
@@ -119,19 +213,30 @@ function initIFixitScraper(messagesRef) {
 
       try {
         const data = await fetchIFixitGuide(guideUrl);
-        let reply = '';
-        if (data.title) reply += `**Guia:** ${data.title}\n\n`;
-        if (data.needs) reply += `**O que você precisa:**\n${data.needs}\n\n`;
+
+        let fullReply = '';
+        if (data.title) fullReply += `**Guia:** ${data.title}\n\n`;
+        if (data.needs) fullReply += `**O que você precisa:**\n${data.needs}\n\n`;
         if (data.steps && data.steps.length) {
-          reply += '**Passos:**\n';
+          fullReply += '**Passos:**\n';
           data.steps.forEach((s, i) => {
-            const short = s.length > 1000 ? s.slice(0, 1000) + '…' : s;
-            reply += `${i + 1}. ${short}\n`;
+            fullReply += `${i + 1}. ${s}\n`;
           });
         } else {
-          reply += 'Nenhum passo encontrado no guia.';
+          fullReply += 'Nenhum passo encontrado no guia.';
         }
-        messagesRef.value[assistantIndex].content = reply;
+
+        try {
+          fullGuides.set(guideUrl, fullReply);
+        } catch (e) {
+          console.warn('Não foi possível salvar fullGuide:', e);
+        }
+
+        let shortReply = fullReply.length > SUMMARY_LIMIT
+          ? fullReply.slice(0, SUMMARY_LIMIT) + '\n\n…(guia completo guardado internamente; digite "mostrar guia completo" para ver tudo)'
+          : fullReply;
+
+        messagesRef.value[assistantIndex].content = shortReply;
       } catch (err) {
         messagesRef.value[assistantIndex].content = 'Erro ao obter o guia do iFixit: ' + (err && err.message ? err.message : String(err));
       }
@@ -139,8 +244,6 @@ function initIFixitScraper(messagesRef) {
       console.error('Erro no watcher iFixit:', err);
     }
   });
-
-  initialized = true;
 
   return {
     stop: () => {
@@ -151,112 +254,38 @@ function initIFixitScraper(messagesRef) {
 
 const ifixit = initIFixitScraper(messages);
 
+onUnmounted(() => {
+  if (ifixit && ifixit.stop) ifixit.stop();
+});
 
-async function sendMessageStream() {
-  const text = userInput.value.trim()
-  if (!text) return
+async function sendMessage() {
+  const text = userInput.value.trim();
+  if (!text) return;
 
-  messages.value.push({ role: 'user', content: text })
-  userInput.value = ''
-
-  const assistantIndex = messages.value.push({ role: 'assistant', content: '' }) - 1
-
-  const payload = {
-    model: MODEL_ID,
-    messages: messages.value,
-    stream: true,
-    temperature: 0.0,
-    top_p: 0.8
+  if (/^(mostrar guia completo|mostrar guia|ver guia completo)$/i.test(text)) {
+    const lastGuide = Array.from(fullGuides.values()).pop();
+    if (lastGuide) {
+      messages.value.push({ role: 'assistant', content: lastGuide });
+    } else {
+      messages.value.push({ role: 'assistant', content: 'Nenhum guia completo armazenado para mostrar.' });
+    }
+    userInput.value = '';
+    return;
   }
+
+  messages.value.push({ role: 'user', content: text });
+  userInput.value = '';
+
+  const assistantIndex = messages.value.push({ role: 'assistant', content: 'Pensando...' }) - 1;
 
   try {
-    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-
-    if (!res.ok) {
-      messages.value[assistantIndex].content = `Erro: ${res.status} ${res.statusText}`
-      return
-    }
-
-    if (!res.body) {
-      const data = await res.json()
-      const botMessage = data.choices?.[0]?.message?.content ?? data.choices?.[0]?.text ?? '[sem conteúdo]'
-      messages.value[assistantIndex].content = botMessage
-      return
-    }
-
-    const reader = res.body.getReader()
-    const decoder = new TextDecoder('utf-8')
-    let buffer = ''
-    let streamDone = false
-
-    while (!streamDone) {
-      const read = await reader.read()
-      if (read.done) break
-
-      buffer += decoder.decode(read.value, { stream: true })
-
-      let nlIndex
-      while ((nlIndex = buffer.indexOf('\n')) !== -1) {
-        const line = buffer.slice(0, nlIndex).trim()
-        buffer = buffer.slice(nlIndex + 1)
-
-        if (!line) continue
-        if (!line.startsWith('data:')) continue
-
-        const payloadStr = line.replace(/^data:\s*/, '')
-
-        if (payloadStr === '[DONE]') {
-          streamDone = true
-          break
-        }
-
-        try {
-          const parsed = JSON.parse(payloadStr)
-          const delta = parsed?.choices?.[0]?.delta?.content
-          const msgContent = parsed?.choices?.[0]?.message?.content
-          const textChunk = parsed?.choices?.[0]?.text
-          const chunk = delta ?? msgContent ?? textChunk
-          if (chunk) messages.value[assistantIndex].content += chunk
-        } catch (e) {
-          continue
-        }
-      }
-    }
-
-    if (buffer.trim()) {
-      const lines = buffer.split('\n').map(l => l.trim()).filter(Boolean)
-      for (const line of lines) {
-        if (!line.startsWith('data:')) continue
-        const payloadStr = line.replace(/^data:\s*/, '')
-        if (payloadStr === '[DONE]') break
-        try {
-          const parsed = JSON.parse(payloadStr)
-          const delta = parsed?.choices?.[0]?.delta?.content
-          const msgContent = parsed?.choices?.[0]?.message?.content
-          const textChunk = parsed?.choices?.[0]?.text
-          const chunk = delta ?? msgContent ?? textChunk
-          if (chunk) messages.value[assistantIndex].content += chunk
-        } catch (e) { }
-      }
-    }
-
+    const replyText = await callGeminiDirect(messages.value);
+    messages.value[assistantIndex].content = replyText || '[sem conteúdo retornado]';
   } catch (err) {
-    console.error('Erro no stream:', err)
-    messages.value[assistantIndex].content = 'Erro de rede ou parsing do stream.'
+    console.error('Erro ao chamar Gemini:', err);
+    messages.value[assistantIndex].content = 'Erro ao chamar Gemini: ' + (err && err.message ? err.message : String(err));
   }
 }
-
-
-
-
-
 </script>
 
 <template>
@@ -270,23 +299,23 @@ async function sendMessageStream() {
         <div v-show="messages.length >= 1" class="messages">
           <div v-for="(msg, idx) in messages" :key="idx" :class="msg.role === 'user' ? 'msg-user' : 'msg-assistant'">
             <strong>{{ msg.role === 'user' ? '' : '' }}</strong>
-            <VMarkdownView mode="transparent" :content="msg.content">
-            </VMarkdownView>
-            <!-- {{ msg.content }} -->
+            <VMarkdownView mode="transparent" :content="msg.content" />
           </div>
         </div>
       </Transition>
+
       <p class="input-area">
-  
-        <input v-model="userInput" @keyup.enter="sendMessageStream" placeholder="Digite algo que deseja concertar..." />
-        <button @click="sendMessageStream">
-          <img src="/public/enviar-mensagem 1.png"></img>
+        <input v-model="userInput" @keyup.enter="sendMessage" placeholder="Digite algo que deseja consertar..." />
+        <button @click="sendMessage" aria-label="Enviar mensagem">
+          <img src="/public/enviar-mensagem 1.png" alt="Enviar" />
         </button>
       </p>
     </div>
   </main>
   <Footer />
 </template>
+
+
 
 
 <style>
