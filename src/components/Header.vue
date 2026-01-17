@@ -5,11 +5,11 @@
   <header class="header">
     <nav>
        <router-link to="/home"> <span class="logo-text">tinkerflux</span></router-link>
-    <router-link to="/home">Home </router-link>
-    <router-link to="/products">Catálogo </router-link>
-    <router-link to="/about">Sobre </router-link>
-    <router-link to="/ia">IA</router-link>
-    <router-link to="/contact">Contate-nos</router-link>
+      <router-link to="/home">Home </router-link>
+      <router-link to="/products">Catálogo </router-link>
+      <router-link to="/about">Sobre </router-link>
+      <router-link to="/ia">IA</router-link>
+      <router-link to="/contact">Contate-nos</router-link>
     </nav>
     <router-link to="/cart"><img src="/public/cart-image.svg" alt="cart-image" class="cart-link"></router-link>
   </header>
