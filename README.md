@@ -8,7 +8,6 @@
 
 - 🌐 Design responsivo para múltiplos dispositivos  
 - 🎨 Interface moderna e amigável  
-- ♿ Foco em inovação acessível para todos
 - 🤖 Assistente Virtual
 - 🛒 Catálogo de Produtos
 
