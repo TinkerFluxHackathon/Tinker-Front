@@ -1,11 +1,15 @@
+<script setup>
+
+
+
+</script>
+
+
 <template>
   <section class="highlights">
     <div class="assistente-container">
       <div class="assistente-info">
         <h1>Nosso <span>Assistente Virtual</span></h1>
-        <p>
-          Caso esteja precisando de auxílio, nosso assistente virtual está aqui para ajudar! Ele pode responder suas perguntas, fornecer informações sobre nossos serviços e guiá-lo através do site. Sinta-se à vontade para clicar no botão abaixo e iniciar uma conversa com nosso assistente virtual.
-        </p>
         <button class="assistente-btn">Clique aqui</button>
       </div>
     </div>
@@ -14,8 +18,8 @@
 
 <style scoped>
 .highlights {
-  background: #ffffff; /* cinza claro minimalista */
-  padding: 10rem 4rem 15rem 10rem; /* padding lateral menor */
+  background: #ffffff;
+  padding: 10rem 4rem 15rem 10rem;
   box-sizing: border-box;
   text-align: left;
 }
@@ -32,11 +36,10 @@
 }
 
 .assistente-info h1 {
-  font-size: 3.3rem;         /* igual ao main-content h1 */
+  font-size: 3.3rem;
   font-weight: 700;
   margin-bottom: 2rem;
   color: #343F43;
-  
 }
 
 
@@ -49,12 +52,11 @@
 }
 
 .assistente-info p {
-  font-size: 1.8rem;         /* menor que antes, se quiser */
+  font-size: 1.8rem;
   margin-bottom: 2rem;
   color: #414141;
   margin-top: 5rem;
   font-weight: 500;
-
 }
 
 .assistente-btn {
